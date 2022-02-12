@@ -1,0 +1,23 @@
+<!-- css -->
+<link href="/static/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<!-- End csss-->
+<div class="container-fluid">
+    <div class="row">
+        <% data.dskhoa.forEach(function(item){ %>
+        <div class="col-lg-2 col-sm-3 col-6 px-md-2">
+            <div class="card card-hover">
+                <div class="box bg-light text-center">
+                    <a href="/phong-kham?khoa=<%=item.ID%>" class="text-dark">
+                        <img src="<%=item.HinhAnh%>" alt="" class="img-avatar" /><br>
+                        <p><%=item.TenKhoa%></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+
+<!--js add-->
+<script src="/static/assets/extra-libs/DataTables/datatables.min.js"></script>

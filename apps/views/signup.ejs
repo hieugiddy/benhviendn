@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title><%=data.title%> | Bệnh viện Đà Nẵng Ecosystem</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/images/favicon.png" />
+    <!-- Custom CSS -->
+    <link href="/static/assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet" />
+    <link href="/static/assets/libs/jquery-steps/steps.css" rel="stylesheet" />
+    <link href="/static/dist/css/style.min.css" rel="stylesheet" />
+    <link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="/">
+                        <!-- Logo icon -->
+                        <b class="logo-icon ps-2">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="/static/assets/images/logo-icon.png" alt="homepage" class="light-logo"
+                                width="25" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text ms-2">
+                            <!-- dark Logo text -->
+                            BỆNH VIỆN ĐÀ NẴNG<br />ECOSYSTEM
+                        </span>
+                        <!-- Logo icon -->
+                        <!-- <b class="logo-icon"> -->
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <!-- <img src="/static/assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
+
+                        <!-- </b> -->
+                        <!--End Logo icon -->
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-start me-auto">
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="pt-4">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/account/signup"
+                                aria-expanded="false"><i class="mdi mdi-account-multiple-plus"></i><span
+                                    class="hide-menu">Đăng ký tài khoản</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/account"
+                                aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">Đăng
+                                    nhập tài khoản</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Đăng ký tài khoản khám bệnh</h4>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/account">Tài khoản</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Đăng ký
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="card">
+                    <div class="card-body wizard-content">
+                        <form id="example-form" method="post">
+                            <div>
+                                <h3>Tài khoản</h3>
+                                <section>
+                                    <label for="userName">Tên đăng nhập *</label>
+                                    <input id="userName" name="UserName" type="text"
+                                        class="required form-control" /><br>
+                                    <label for="password">Mật khẩu *</label>
+                                    <input id="password" name="Password" type="password"
+                                        class="required form-control" /> <br>
+                                    <label for="confirm">Nhập lại mật khẩu *</label>
+                                    <input id="confirm" name="confirmPassword" type="password"
+                                        class="required form-control" />
+                                    <br>
+                                    <p>(*) Bắt buộc</p>
+                                </section>
+                                <h3>Hồ sơ</h3>
+                                <section>
+                                    <label for="name">Họ tên *</label>
+                                    <input id="name" name="HoTen" type="text" class="required form-control" />
+                                    <label for="gioitinh">Giới tính *</label>
+                                    <select class="select2 form-select shadow-none select2-hidden-accessible"
+                                        style="width: 100%; height: 36px" data-select2-id="1" tabindex="-1"
+                                        aria-hidden="true" name="GioiTinh">
+                                        <option value="1">Nam</option>
+                                        <option value="0">Nữ</option>
+                                        <option value="2">Khác</option>
+                                    </select>
+                                    <label for="NgaySinh">Ngày sinh *</label>
+                                    <input type="text" class="required form-control" name="NgaySinh" id="date"
+                                        placeholder="Chọn ngày sinh" readonly />
+
+                                    <label for="SoDT">Số ĐT *</label>
+                                    <input id="SoDT" name="SoDT" type="text" class="required form-control" />
+                                    <label for="Email">Email</label>
+                                    <input id="Email" name="Email" type="text" class="required email form-control" />
+                                    <label for="CMND">CMND/CCID *</label>
+                                    <input id="CMND" name="CMND" type="text" class="required cmnd form-control" />
+                                    <label for="DiaChi">Địa chỉ *</label>
+                                    <input id="DiaChi" name="DiaChi" type="text" class="form-control" />
+                                    <label for="SoTheBHYT">Số thẻ BHYT *</label>
+                                    <input id="SoTheBHYT" name="SoTheBHYT" type="text" class="form-control" />
+                                    <br> 
+                                    <p>(*) Bắt buộc</p>
+                                </section>
+                                <h3>Hoàn thành</h3>
+                                <section>
+                                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required" />
+                                    <label for="acceptTerms">Tôi đồng ý với các Điều khoản và Điều kiện..</label>
+                                </section>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by Đặng Minh Hiếu. Designed and Developed by
+                <a href="#">Hiếu Giddy</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/static/assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="/static/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="/static/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        <%if (messenger) {%>
+            toastr["error"]("<%=messenger%>");
+        <%}%>
+    </script>
+    <script>
+        // Basic Example with form
+        var form = $("#example-form");
+
+        $.validator.addMethod("validatePassword", function (value, element) {
+            return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
+        });
+
+        form.validate({
+            errorPlacement: function errorPlacement(error, element) {
+                element.before(error);
+            },
+            rules: {
+                "UserName": {
+                    required: true,
+                    maxlength: 20,
+                },
+                "Password": {
+                    required: true,
+                    validatePassword: true,
+                },
+                "confirmPassword": {
+                    equalTo: "#password",
+                },
+                "HoTen": {
+                    required: true,
+                    maxlength: 100
+                },
+                "NgaySinh": {
+                    required: true,
+                    date: true,
+                },
+                "SoDT": {
+                    required: true,
+                    maxlength: 11,
+                },
+                "Email": {
+                    required: true,
+                    email: true
+                },
+                "CMND": {
+                    required: true,
+                },
+                "DiaChi": {
+                    required: true,
+                },
+                "SoTheBHYT": {
+                    required: true,
+                },
+                "acceptTerms": {
+                    required: true
+                }
+            },
+            messages: {
+                "UserName": {
+                    required: "Hãy nhập ít nhât 1 ký tự",
+                    maxlength: "Hãy nhập tối đa 20 ký tự",
+                },
+                "Password": {
+                    required: "Bắt buộc nhập password",
+                    validatePassword: "Hãy nhập ít nhất 8 ký tự, có chữ hoa, chữ thường và ít nhất một chữ số"
+                },
+                "confirmPassword": {
+                    equalTo: "Hai password phải giống nhau",
+                },
+                "HoTen": {
+                    required: "Bắt buộc phải nhập trường này",
+                    maxlength: "Hãy nhập tối đa 100 ký tự",
+                },
+                "NgaySinh": {
+                    required: "Bắt buộc phải nhập trường này",
+                    date: "Trường này phải đúng định dạng ngày",
+                },
+                "SoDT": {
+                    required: "Bắt buộc phải nhập trường này",
+                    maxlength: "Hãy nhập tối đa 11 ký tự",
+                },
+                "Email": {
+                    required: "Bắt buộc phải nhập trường này",
+                    email: "Bạn chỉ được phép nhập email"
+                },
+                "CMND": {
+                    required: "Bắt buộc phải nhập trường này",
+                },
+                "DiaChi": {
+                    required: "Bắt buộc phải nhập trường này",
+                },
+                "SoTheBHYT": {
+                    required: "Bắt buộc phải nhập trường này",
+                },
+                "acceptTerms": {
+                    required: "Bạn cần phải đồng ý với điều khoản dịch vụ của chúng tôi"
+                }
+            },
+        });
+
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                form.submit();
+            },
+        });
+        $('#date').datepicker({
+            format: "yyyy-mm-dd",
+            language: "vi",
+            calendarWeeks: true,
+            autoclose: true
+        });
+    </script>
+</body>
+
+</html>

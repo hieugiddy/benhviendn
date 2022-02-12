@@ -1,0 +1,126 @@
+<!-- this CSS -->
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<div class="container-fluid">
+    <div class="card">
+        <!-- Tab panes -->
+        <div class="tab-content tabcontent-border">
+            <div class="tab-pane active py-20" id="hoso" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6 px-2">
+                        <h5 class="p-3"><u>Bệnh điều trị</u></h5>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
+                                    <td>2929 - N.V.A</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
+                                    <td><a href="">21 - N.Văn B</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
+                                    <td>
+                                        <select class="benh-combo form-control" name="IDBenh" id="IDBenh">
+                                            <option value="AL">Alabama</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="thembenh">
+                                            <label class="form-check-label mb-0" for="thembenh">Thêm bệnh mới</label>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="text" name="TenBenh" id="tenbenh" disabled />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 px-2">
+                        <h5 class="p-3"><u>Kế hoạch điều trị đầu tiên</u></h5>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Tên kế hoạch:</strong></th>
+                                    <td>
+                                        <input type="text" class="form-control" id="tenkehoach"
+                                            placeholder="Tên kế hoạch">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Phương pháp điều
+                                            trị:</strong></th>
+                                    <td>
+                                        <input type="text" class="form-control" id="phuongphapdieutri"
+                                            placeholder="Phương pháp điều trị">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Thời gian:</strong></th>
+                                    <td>
+                                        <input placeholder="Từ ngày" type="text" class="input-sm form-control"
+                                            name="datepicker1" id="thoigian1" /><br>
+                                        <input placeholder="đến ngày" type="text" class="input-sm form-control"
+                                            name="datepicker2" id="thoigian2" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Nội dung điều trị:</strong></th>
+                                    <td>
+                                        <textarea class="form-control"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Nhập viện:</strong></th>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="nhapvien">
+                                            <label class="form-check-label mb-0" for="nhapvien">Cần phải nhập
+                                                viện</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-success text-light" href="" style="float: right;margin: 20px 20px 100px 0;">Thêm</a>
+    <div style="clear: both;"></div>
+</div>
+
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#thoigian1').datepicker({
+            format: "yyyy-mm-dd",
+        });
+        $('#thoigian2').datepicker({
+            format: "yyyy-mm-dd",
+        });
+        $(".benh-combo").select2({
+            theme: "classic"
+        });
+        $("#thembenh").on("change", function () {
+            var status = $("#thembenh").is(":checked");
+            $("#tenbenh").prop("disabled", !status);
+            $("#IDBenh").prop("disabled", status);
+        });
+    });
+</script>

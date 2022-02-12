@@ -1,0 +1,47 @@
+<!-- css -->
+<link href="/static/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+<!-- End csss-->
+
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="zero_config" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Mã số</th>
+              <th>Họ tên</th>
+              <th>Giới tính</th>
+              <th>Số CMND</th>
+              <th>Mã số sổ sức khỏe</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>12</td>
+              <td>Đặng Minh Hiếu</td>
+              <td>Nam</td>
+              <td>200100211</td>
+              <td>9199</td>
+              <td>
+                <a href="/thong-tin/10">
+                  <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--js add-->
+<script src="/static/assets/extra-libs/DataTables/datatables.min.js"></script>
+<script>
+  /****************************************
+   *       Basic Table                   *
+   ****************************************/
+  $("#zero_config").DataTable();
+</script>

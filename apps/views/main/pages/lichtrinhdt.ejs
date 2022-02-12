@@ -1,0 +1,46 @@
+<!-- css -->
+<link href="/static/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<!-- End csss-->
+
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên kế hoạch</th>
+                            <th scope="col">Bác sĩ điều trị</th>
+                            <th scope="col">Thời gian</th>
+                            <th scope="col">Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Xạ trị lần 1</td>
+                            <td>Văn Liêm</td>
+                            <td>11/11/2020 - 20/11/2021</td>
+                            <td>Chờ duyệt</td>
+                            <td>
+                                <a href="/chi-tiet-ke-hoach/1">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--js add-->
+<script src="/static/assets/extra-libs/DataTables/datatables.min.js"></script>
+
+<script>
+    $("#zero_config").DataTable();
+</script>

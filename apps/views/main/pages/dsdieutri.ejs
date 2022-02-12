@@ -1,0 +1,51 @@
+<!-- css -->
+<link href="/static/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<!-- End csss-->
+
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ảnh đại diện</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Bệnh điều trị</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <img src="a.png" alt="" width="70px" />
+                            </td>
+                            <td>N.V.A</td>
+                            <td>Nam</td>
+                            <td>08/01/1998</td>
+                            <td>Viêm gan B</td>
+                            <td>
+                                <a href="/thong-tin/10">
+                                    <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--js add-->
+<script src="/static/assets/extra-libs/DataTables/datatables.min.js"></script>
+
+<script>
+    $("#zero_config").DataTable();
+</script>

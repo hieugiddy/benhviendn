@@ -1,0 +1,93 @@
+<!-- css -->
+<link href="/static/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<!-- End csss-->
+
+
+<div class="container-fluid">
+    <div class="col-lg-5 p-2 card">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="input-daterange input-group" id="date">
+                    <strong class="btn">Từ:</strong>
+                    <input type="text" class="input-sm form-control" name="start" id="start_d" value="<%if(startD){%><%=startD%><%}%>" readonly/>
+                    <strong class="btn">đến:</strong>
+                    <input type="text" class="input-sm form-control" name="end" id="end_d" value="<%if(endD){%><%=endD%><%}%>" readonly/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <input type="button" value="Áp dụng" id="dateFilter" class="btn btn-primary" style="margin-left:5px">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Bệnh cần khám</th>
+                            <th>Nơi khám</th>
+                            <th>Khung giờ</th>
+                            <th>Hình thức</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.dslichkham.forEach(function(item){ %>
+                        <tr>
+                            <td><%= item.ID %></td>
+                            <td><%= item.BenhCanKham %></td>
+                            <td><%= item.TenPhongKham %></td>
+                            <td><%= item.GioBatDau %> - <%= item.GioKetThuc %></td>
+                            <td>
+                                <%if(item.HinhThuc){%>
+                                Offline
+                                <%}%>
+                                <%if(!item.HinhThuc){%>
+                                Online
+                                <%}%>
+                            </td>
+                            <td><%= item.TrangThai %></td>
+                            <td>
+                                <a href="/lich-kham/chi-tiet-lich-kham/<%= item.ID %>">
+                    <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
+                    </a>
+                    </td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--js add-->
+    <script src="/static/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        $("#zero_config").DataTable();
+        $('#date').datepicker({
+            format: "yyyy-mm-dd",
+            language: "vi",
+            calendarWeeks: true,
+            autoclose: true
+        });
+        $("#dateFilter").click(function () {
+            location.href = "/lich-kham?startD=" + $("#start_d").val() + "&endD=" + $("#end_d").val();
+        });
+
+        var qd = {};
+        location.search.substr(1).split("&").forEach(function (item) { var k = item.split("=")[0], v = decodeURIComponent(item.split("=")[1]); (k in qd) ? qd[k].push(v) : qd[k] = [v] })
+        $("#start_d").val(qd.startD[0]);
+        $("#end_d").val(qd.endD[0]);
+    </script>

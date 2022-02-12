@@ -1,0 +1,93 @@
+<!-- this CSS -->
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<div class="container-fluid">
+    <div class="card">
+        <!-- Tab panes -->
+        <div class="tab-content tabcontent-border">
+            <div class="tab-pane active py-20" id="hoso" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6 px-2">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
+                                    <td>2929 - N.V.A</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
+                                    <td><a href="">21 - N.Văn B</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
+                                    <td><a href="">Viêm gan B</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Thời gian:</strong></th>
+                                    <td>
+                                        <input placeholder="Từ ngày" type="text" class="input-sm form-control"
+                                            name="datepicker1" id="thoigian1" /><br>
+                                        <input placeholder="đến ngày" type="text" class="input-sm form-control"
+                                            name="datepicker2" id="thoigian2" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 px-2">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Tên kế hoạch:</strong></th>
+                                    <td>
+                                        <input type="text" class="form-control" id="tenkehoach"
+                                            placeholder="Tên kế hoạch">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><strong>Phương pháp điều
+                                            trị:</strong></th>
+                                    <td>
+                                        <input type="text" class="form-control" id="phuongphapdieutri"
+                                            placeholder="Phương pháp điều trị">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Nội dung điều trị:</strong></th>
+                                    <td>
+                                        <textarea class="form-control"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><strong>Nhập viện:</strong></th>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="nhapvien">
+                                            <label class="form-check-label mb-0" for="nhapvien">Cần phải nhập
+                                                viện</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-success text-light" href="" style="float: right;margin: 20px;">Lưu</a>
+</div>
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script>
+    $('#thoigian1').datepicker({
+        format: "yyyy-mm-dd",
+    });
+    $('#thoigian2').datepicker({
+        format: "yyyy-mm-dd",
+    });
+</script>

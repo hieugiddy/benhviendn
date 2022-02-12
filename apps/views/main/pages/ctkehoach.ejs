@@ -1,0 +1,156 @@
+<!-- this CSS -->
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/static/assets/libs/select2/dist/css/select2.min.css" />
+
+<div class="container-fluid">
+    <div class="card">
+        <!-- Tab panes -->
+        <div class="py-2">
+            <div class="row">
+                <div class="col-md-6 px-2">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
+                                <td>2929 - N.V.A</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
+                                <td><a href="">21 - N.Văn B</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
+                                <td><a href="">Viêm gan B</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Thời gian:</strong></th>
+                                <td>
+                                    <input placeholder="Từ ngày" type="text" class="input-sm form-control"
+                                        name="datepicker1" id="thoigian1" /><br>
+                                    <input placeholder="đến ngày" type="text" class="input-sm form-control"
+                                        name="datepicker2" id="thoigian2" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 px-2">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Tên kế hoạch:</strong></th>
+                                <td>
+                                    <input type="text" class="form-control" id="tenkehoach" placeholder="Tên kế hoạch">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Phương pháp điều trị:</strong>
+                                </th>
+                                <td>
+                                    <input type="text" class="form-control" id="phuongphapdieutri"
+                                        placeholder="Phương pháp điều trị">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Nội dung điều trị:</strong></th>
+                                <td>
+                                    <textarea class="form-control"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Nhập viện:</strong></th>
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="nhapvien">
+                                        <label class="form-check-label mb-0" for="nhapvien">Cần phải nhập viện</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Đã hoàn thành:</strong></th>
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="hoanthanh">
+                                        <label class="form-check-label mb-0" for="hoanthanh">Yes</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary text-light" href="" style="float: right;margin: 20px;">Lưu</a>
+    <div style="clear: both;"></div>
+
+    <h4 class="page-title">Thuốc điều trị</h4>
+    <div class="card">
+        <div class="row p-2">
+            <div class="py-2 col-md-5">
+                <h6><u>Danh sách thuốc điều trị</u></h6>
+
+                <ul style="padding-left: 0;">
+                    <li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc1" role="button"
+                        aria-expanded="false" aria-controls="Thuoc1" style="text-align: left;">
+                        Paractamol
+                    </li>
+                </ul>
+                <div class="collapse col-12" id="Thuoc1">
+                    <div class="card card-body" style="padding-top: 0px !important; text-align: justify;">
+                        <ul>
+                            <li>1 hộp (100 viên)</li>
+                            <li>Ngày uống 2 lần</li>
+                            <li>Mỗi lần uống 3 viên</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 col-md-7 px-2">
+                <h6><u>Thêm thuốc điều trị</u></h6><br>
+
+                <label for="">Chọn thuốc điều trị</label><br>
+                <select class="thuoc-combo col-12" name="IDThuoc" id="IDThuoc">
+                    <option value="AL">Alabama</option>
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select><br>
+                <label for="" class="mt-3">Liều lượng & Ghi chú</label><br>
+                <textarea class="form-control"></textarea>
+                <div style="text-align: right;">
+                    <input type="submit" name="btn-themthuoc" value="Lưu" class="btn btn-primary mt-4" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="page-title">Lịch hẹn điều trị</h4>
+    <div class="card">
+        <div class="py-2">
+            <ul>
+                <li> <a href="detail_lich.html">Điều trị xạ trị 1</a> (<em>2021-10-12 12:00</em>) - <strong>Chờ
+                        khám</strong></li>
+                <li> <a href="detail_lich.html">Điều trị xạ trị 1</a> (<em>2021-10-09 12:00</em>) - <strong>Bị
+                        hủy</strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $('#thoigian1').datepicker({
+        format: "yyyy-mm-dd",
+    });
+    $('#thoigian2').datepicker({
+        format: "yyyy-mm-dd",
+    });
+    $(".thuoc-combo").select2({
+        theme: "classic"
+    });
+</script>

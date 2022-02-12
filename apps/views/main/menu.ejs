@@ -1,0 +1,72 @@
+<aside class="left-sidebar" data-sidebarbg="skin5">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav" class="pt-4">
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i
+              class="mdi mdi-home"></i><span class="hide-menu">Trang chủ</span></a>
+        </li>
+        <%if(data.User.LoaiTK==3){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/thanh-vien" aria-expanded="false"><i
+              class="mdi mdi-account-box"></i><span class="hide-menu">Thành viên gia đình</span></a>
+        </li>
+        <%}%>
+        <%if(data.User.LoaiTK==1 || data.User.LoaiTK==2){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/benh-nhan" aria-expanded="false"><i
+              class="mdi mdi-account-box"></i><span class="hide-menu">Bệnh nhân</span></a>
+        </li>
+        <%}%>
+        <%if(!data.User.LoaiTK==0){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/lich-kham" aria-expanded="false"><i
+              class="mdi mdi-calendar-check"></i><span class="hide-menu">Lịch khám bệnh</span></a>
+        </li>
+        <%}%>
+        <%if(data.User.LoaiTK==3){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/ke-hoach-dieu-tri" aria-expanded="false"><i
+              class="mdi mdi-bookmark-plus"></i><span class="hide-menu">Kế hoạch điều trị</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/ho-so-suc-khoe" aria-expanded="false"><i
+              class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Hồ sơ sức khỏe</span></a>
+        </li>
+        <%}%>
+        <%if(data.User.LoaiTK==2){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/ds-dieu-tri" aria-expanded="false"><i
+              class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Danh sách điều trị</span></a>
+        </li>
+        <%}%>
+        <%if(!data.User.LoaiTK==0){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/messenger" aria-expanded="false"><i
+              class="mdi mdi-facebook-messenger"></i><span class="hide-menu">Messenger</span></a>
+        </li>
+        <%}%>
+        <%if(data.User.LoaiTK==1){%>
+          <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="javascript:void(0)" 
+            id="QuetQR" aria-expanded="false" data-bs-toggle="modal"
+              data-bs-target="#exampleModal"><i class="mdi mdi-qrcode-scan"></i><span class="hide-menu">Quét
+                QR</span></a>
+          </li>
+        <%}%>
+        
+        <%if(data.User.LoaiTK==2 || data.User.LoaiTK==3){%>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/phong-kham" aria-expanded="false"><i
+              class="mdi mdi-hospital"></i><span class="hide-menu">Phòng khám</span></a>
+        </li>
+        <%}%>
+
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>

@@ -1,0 +1,185 @@
+<!-- this CSS -->
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="card">
+
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="image-container col-lg-2 col-md-3 col-sm-4 mb-2">
+                    <img src="<%=data.bacsi.AnhDaiDien%>" id="imgProfile"
+                        style="width: 150px; height: 150px; margin-right: 20px;" class="img-thumbnail" />
+                </div>
+                <div class="userData ml-3 col-lg-5 col-md-6 col-sm-8">
+                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold;"><%=data.bacsi.HoTen%>
+                        <span class="badge bg-success"
+                            style="font-size:10px;position: relative;top:-13px;">Online</span>
+                    </h2>
+                    <h6 class="d-block">@<%=data.bacsi.Username%></h6>
+                    <a href="" class="btn btn-primary mt-2"><i class="mdi mdi-wechat"></i>&nbsp;Trò
+                        chuyện</a>
+                    <a href="" class="btn btn-dark mt-2"><i class="mdi mdi-webcam"></i>&nbsp;Video call</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#datlich" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Đặt lịch</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#info" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Thông tin bác sĩ</span></a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabcontent-border">
+                    <div class="tab-pane active" id="datlich" role="tabpanel">
+                        <form method="post" class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="">Bệnh cần khám</label>
+                                <input type="text" class="form-control" name="BenhCanKham" />
+                                <br>
+                                <label for="">Triệu chứng</label>
+                                <textarea class="form-control" name="TrieuChung"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Ngày khám bệnh</label>
+                                <input type="text" class="form-control" name="ThoiGianKhamBenh" id="NgayKhamBenh"
+                                    readonly />
+                                <br>
+                                <label for="">Hình thức</label>
+                                <select id="HinhThuc" name="HinhThuc" class="form-control">
+                                    <option value="-1">---Lựa chọn---</option>
+                                    <option value="0">Online</option>
+                                    <option value="1">Tại bệnh viện</option>
+                                </select>
+                                <br>
+                                <label for="">Khung giờ</label>
+                                <select id="KhungGio" name="IDKhungGio" class="form-control">
+
+                                </select>
+                            </div>
+                            <div style="text-align:right">
+                                <input type="submit" class="btn btn-primary" value="Đặt lịch">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane py-20" id="info" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 px-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><strong>Mã định danh:</strong></th>
+                                            <td><%=data.bacsi.IDTK%></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Giới tính:</strong></th>
+                                            <td>
+                                                <%if(data.bacsi.GioiTinh==1){%>Nam<%}%>
+                                                <%if(data.bacsi.GioiTinh==0){%>Nữ<%}%>
+                                                <%if(data.bacsi.GioiTinh==3){%>Khác<%}%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Ngày Sinh:</strong></th>
+                                            <td><%=data.bacsi.NgaySinh%></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Số ĐT:</strong></th>
+                                            <td><%=data.bacsi.SoDT%></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row"><strong>Địa chỉ:</strong></th>
+                                            <td><%=data.bacsi.DiaChi%></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Email:</strong></th>
+                                            <td><%=data.bacsi.Email%></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 px-2">
+                                <form action="">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><strong>Khoa:</strong></th>
+                                                <td><%=data.bacsi.TenKhoa%></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chức vụ:</strong></th>
+                                                <td><%=data.bacsi.TenChucVu%></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Kinh nghiệm:</strong></th>
+                                                <td style="text-align: justify;"><%=data.bacsi.KinhNghiem%></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Giới thiệu:</strong></th>
+                                                <td style="text-align: justify;"><%=data.bacsi.GioiThieu%></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="/static/assets/libs/moment/min/moment.min.js"></script>
+<script src="/static/dist/js/pages/calendar/cal-init.js"></script>
+<script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+<script>
+    $('#NgayKhamBenh').datepicker({
+        format: "dd/mm/yyyy",
+        language: "vi",
+    });
+    $('#NgayKhamBenh').on('change', function () {
+        $('#KhungGio').html('');
+        if ($('#HinhThuc').val()) {
+            getKhungGio();
+        }
+    });
+    $('#HinhThuc').on('change', function () {
+        $('#KhungGio').html('');
+        if ($('#NgayKhamBenh').val()) {
+            getKhungGio();
+        }
+    });
+    function getKhungGio() {
+        $.ajax({
+            url: '/phong-kham',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ThoiGianKhamBenh: $("#NgayKhamBenh").val(),
+                HinhThuc: $("#HinhThuc").val(),
+                GetAjax: true
+            }
+        }).done(function (ketqua) {
+            ketqua.forEach(element => {
+                $('#KhungGio').html($('#KhungGio').html() + '<option value="' + element.ID + '">' + element.GioBatDau + ' đến ' + element.GioKetThuc + '</option>');
+            });
+        });
+    }
+</script>

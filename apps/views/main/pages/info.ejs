@@ -1,0 +1,343 @@
+<!-- this CSS -->
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="card">
+
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="image-container col-lg-2 col-md-3 col-sm-4 mb-2">
+                    <img src="http://placehold.it/150x150" id="imgProfile"
+                        style="width: 150px; height: 150px; margin-right: 20px;" class="img-thumbnail" />
+                </div>
+                <div class="userData ml-3 col-lg-3 col-md-6 col-sm-8">
+                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold;">Đặng Minh Hiếu
+                        <span class="badge bg-success"
+                            style="font-size:10px;position: relative;top:-13px;">Online</span>
+                    </h2>
+                    <h6 class="d-block">@hieugiddy</h6>
+                    <a href="/messenger/chat/10" class="btn btn-primary mt-2"><i class="mdi mdi-wechat"></i>&nbsp;Trò
+                        chuyện</a>
+                    <a onclick="goidien(this)" data-id="10" class="btn btn-dark mt-2"><i class="mdi mdi-webcam"></i>&nbsp;Video call</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#hoso" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Thông tin cá nhân</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#quatrinh" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Quá trình điều trị bệnh</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#lichkb" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Lịch khám bệnh</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#lichsu" role="tab"><span
+                                class="hidden-sm-up"></span>
+                            <span class="hidden-xs-down">Lịch sử khám bệnh</span></a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabcontent-border">
+                    <div class="tab-pane active py-20" id="hoso" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 px-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><strong>Mã định danh:</strong></th>
+                                            <td>2929</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Số sổ sức khỏe:</strong></th>
+                                            <td>112211</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Số thẻ BHYT:</strong></th>
+                                            <td>488888888888</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Họ tên:</strong></th>
+                                            <td>Đặng Minh Hiếu</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row"><strong>Ngày sinh:</strong></th>
+                                            <td>09/06/2000</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Chức vụ:</strong></th>
+                                            <td>Bệnh nhân</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Giới tính:</strong></th>
+                                            <td>Nam</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Số điện thoại:</strong></th>
+                                            <td>0368336666</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>CMND/CCID:</strong></th>
+                                            <td>049200000111</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Email:</strong></th>
+                                            <td>hieudang9000@gmail.com</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Địa chỉ:</strong></th>
+                                            <td>Thôn Mỹ Phước, Xã Duy Phước, Huyện Duy Xuyên, Tỉnh Quảng Nam.</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Giới thiệu bản thân:</strong></th>
+                                            <td>abcdef.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 px-2">
+                                <form action="">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><strong>Đường huyết:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="DuongHuyet"
+                                                        value="12.7" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>SPO2:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="SPO2" value="121" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Huyết áp:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="HuyetAp"
+                                                        value="12.7" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhiệt độ:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhietDo"
+                                                        value="12 độ C" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhịp tim:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhipTim" value="12" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chiều cao:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ChieuCao"
+                                                        value="1.2m" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Cân nặng:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="CanNang"
+                                                        value="120km" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chỉ số BMI:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="BMI" value="12.7" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhomMau" value="A+" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu RH:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="RH" value="A-" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div style="text-align: right;">
+                                        <button class="btn btn-success text-light">Lưu</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="quatrinh" role="tabpanel">
+                        <a href="/benh-nhan/10/them-benh-dieu-tri"
+                            style="display:block;text-align:right;padding:10px 0">(+) Thêm bệnh
+                            điều
+                            trị</a>
+                        <div class="btn-group col-12 mt-2">
+                            <ol>
+                                <li data-bs-toggle="modal" data-bs-target="#kehoachtb" style="cursor: pointer;">
+                                    Viêm gan B
+                                </li>
+                                <li data-bs-toggle="modal" data-bs-target="#kehoachtb" style="cursor: pointer;">
+                                    Viêm gan B
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="tab-pane py-20" id="lichkb" role="tabpanel">
+                        <div class="col-lg-5" style="float: right;">
+                            <div class="input-daterange input-group my-3" id="date1">
+                                <strong class="py-2">Chọn thời gian:&nbsp;&nbsp;</strong>
+                                <input type="text" class="input-sm form-control" name="start" id="start_d1" readonly />
+                                <span class="btn">đến</span>
+                                <input type="text" class="input-sm form-control" name="end" id="end_d1" readonly />
+                            </div>
+                        </div>
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Bệnh cần khám</th>
+                                    <th scope="col">Địa điểm</th>
+                                    <th scope="col">Khung giờ</th>
+                                    <th scope="col">Hình thức</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Khám gan</td>
+                                    <td>Khoa ngoại</td>
+                                    <td>11/11/2020 - 20/11/2021</td>
+                                    <td>Offline</td>
+                                    <td>Chờ duyệt</td>
+                                    <td>
+                                        <a href="/benh-nhan/10/chi-tiet-lich-kham/1">Xem chi tiết</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane py-20" id="lichsu" role="tabpanel">
+                        <div class="col-lg-5" style="float: right;">
+                            <div class="input-daterange input-group my-3" id="date2">
+                                <strong class="py-2">Chọn thời gian:&nbsp;&nbsp;</strong>
+                                <input type="text" class="input-sm form-control" name="start" id="start_d2" readonly />
+                                <span class="btn">đến</span>
+                                <input type="text" class="input-sm form-control" name="end" id="end_d2" readonly />
+                            </div>
+                        </div>
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Bệnh cần khám</th>
+                                    <th scope="col">Địa điểm</th>
+                                    <th scope="col">Khung giờ</th>
+                                    <th scope="col">Hình thức</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Khám gan</td>
+                                    <td>Khoa ngoại</td>
+                                    <td>11/11/2020 - 20/11/2021</td>
+                                    <td>Offline</td>
+                                    <td>
+                                        <a href="/benh-nhan/10/chi-tiet-lich-kham/1">Xem chi tiết</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="kehoachtb" tabindex="-1" aria-labelledby="kehoachtb" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="kehoachtb">Viêm gan B</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <a href="/benh-nhan/10/them-ke-hoach" class="btn btn-danger mb-3">Thêm kế hoạch</a>
+                        <ol style="margin-left: -15px !important;">
+                            <li style="border-bottom: 1px solid #f1f1f1;">
+                                <a href="/benh-nhan/10/chi-tiet-ke-hoach">
+                                    <div class="card" style="margin-bottom: 0 !important;">
+                                        <div class="card-body"
+                                            style="position: relative;padding: 20px 20px 5px 5px !important;">
+                                            <strong class="text-dark">Xạ trị lần 1</strong>
+                                            <p class="text-dark"><em>11/11/2020 - 20/11/2021</em></p>
+                                            <span style="position: absolute; right: 5px;top:10px">Đang điều trị</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="/static/assets/libs/moment/min/moment.min.js"></script>
+<script src="/static/dist/js/pages/calendar/cal-init.js"></script>
+<script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+<script>
+    $('#date1').datepicker({
+        format: "dd/mm/yyyy",
+        language: "vi",
+        calendarWeeks: true,
+        autoclose: true
+    });
+    $('#date2').datepicker({
+        format: "dd/mm/yyyy",
+        language: "vi",
+        calendarWeeks: true,
+        autoclose: true
+    });
+    function goidien(obj) {
+        var a = window;
+        var b = document;
+        var c = encodeURIComponent;
+        var d = a.open('/messenger/videocall/'+$(obj).attr('data-id'),
+            'bookmarklet_popup',
+            'left=' + ((a.screenX || a.screenLeft) + 100) + ',top=' + ((a.screenY || a.screenTop) + 100) + ',height=510px,width=950px,resizable=1,alwaysRaised=1');
+        a.setTimeout(function () { d.focus() }, 300);
+    }
+</script>

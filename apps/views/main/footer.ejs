@@ -1,0 +1,79 @@
+<footer class="footer text-center">
+  All Rights Reserved by Đặng Minh Hiếu. Designed and Developed by
+  <a href="#">Hiếu Giddy</a>.
+</footer>
+<%if(data.User.LoaiTK==1){%>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Đưa QR code của bệnh nhân lại gần camera</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeQRCode"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12" id="reader"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<%}%>
+
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="/static/assets/extra-libs/sparkline/sparkline.js"></script>
+<!--Wave Effects -->
+<script src="/static/dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/static/dist/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/static/dist/js/custom.min.js"></script>
+<script src="/static/dist/js/html5-qrcode.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<%if(data.User.LoaiTK==1){%>
+<!--This page JavaScript -->
+<script>
+  var html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader", { fps: 10, qrbox: 250 });
+
+  var lastResult, countResults = 0;
+
+  function onScanSuccess(decodedText, decodedResult) {
+    if (decodedText !== lastResult) {
+      ++countResults;
+      lastResult = decodedText;
+
+      $.ajax({
+        url: '/xac-nhan-lich-hen',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          qrText: decodedText
+        }
+      }).done(function (ketqua) {
+        if (ketqua.success)
+          toastr["success"](ketqua.success);
+        if (ketqua.error)
+          toastr["error"](ketqua.error);
+      });
+
+      // Optional: To close the QR code scannign after the result is found
+      $(".btn-close").click();
+      html5QrcodeScanner.clear();
+    }
+  }
+  function onScanError(qrCodeError) {
+    console.log('Unable to start scanning, error: ${err}');
+  }
+  $("#closeQRCode").click(function () {
+    html5QrcodeScanner.clear();
+  });
+  $("#QuetQR").click(function () {
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+  });
+
+</script>
+<%}%>
