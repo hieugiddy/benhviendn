@@ -109,6 +109,30 @@ function getKQKhamBenh(ID) {
     return defer.promise;
 }
 
+function addKQKB(data) {
+    var defer = q.defer();
+    conn.query('INSERT INTO ketquakhambenh SET ?',[data], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function addChiTietKQ(data) {
+    var defer = q.defer();
+    conn.query('INSERT INTO chitietketquakb SET ?',[data], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
 function getThuocDT(ID) {
     var defer = q.defer();
     conn.query('SELECT * FROM thuocdieutri INNER JOIN thuoc ON thuocdieutri.IDThuoc=thuoc.ID WHERE thuocdieutri.IDLKB=?', [ID], function (error, results, fields) {
@@ -181,6 +205,54 @@ function getStatusLKB(IDLKB) {
     return defer.promise;
 }
 
+function getCTThuoc(ID) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM thuoc WHERE ID=?',[ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function timThuoc(Ten) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM thuoc WHERE TenThuoc like "%'+Ten+'%"', function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function themThuocDieuTri(data) {
+    var defer = q.defer();
+    conn.query('INSERT INTO thuocdieutri SET ?',[data], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function hoanThanhLichKham(ID) {
+    var defer = q.defer();
+    conn.query('UPDATE lichkhambenh SET ThoiGianHoanThanh=CURRENT_TIMESTAMP(), SanSangKB=0 WHERE ID=?',[ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
 module.exports = {
     getKhungGioConCho: getKhungGioConCho,
     addLich: addLich,
@@ -196,5 +268,11 @@ module.exports = {
     checkQRCode: checkQRCode,
     xacNhanDenKham: xacNhanDenKham,
     sanSangKhamBenh: sanSangKhamBenh,
-    getStatusLKB: getStatusLKB
+    getStatusLKB: getStatusLKB,
+    addKQKB: addKQKB,
+    addChiTietKQ:addChiTietKQ,
+    timThuoc: timThuoc,
+    themThuocDieuTri: themThuocDieuTri,
+    getCTThuoc: getCTThuoc,
+    hoanThanhLichKham: hoanThanhLichKham
 }

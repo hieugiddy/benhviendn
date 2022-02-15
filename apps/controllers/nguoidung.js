@@ -17,7 +17,10 @@ router.route("/")
             data: {
                 page: 'trangchu',
                 title: "Trang chủ",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -30,7 +33,10 @@ router.route("/benh-nhan")
             data: {
                 page: 'benhnhan',
                 title: "Danh sách bệnh nhân",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -47,13 +53,16 @@ router.route("/thong-tin/:id")
                     path: '/benh-nhan'
                 },
                 title: "Thông tin bệnh nhân",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
 
 router.route("/lich-kham")
-    .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
+    .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res, next) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
         var dslichkham;
 
@@ -63,9 +72,7 @@ router.route("/lich-kham")
                     : await BacSiModel.getLichKhamBenh(req.session.User.id);
                 break;
             case 3:
-                dslichkham = (req.query.startD && req.query.endD) ? await BenhNhanModel.filterLichKhamBenh(req.session.User.id, req.query.startD, req.query.endD)
-                    : await BenhNhanModel.getLichKhamBenh(req.session.User.id);
-                break;
+                return next();
             default:
                 dslichkham = (req.query.startD && req.query.endD) ? await LichKhamBenhModel.filterLichKhamBenh(req.query.startD, req.query.endD)
                     : await LichKhamBenhModel.getLichKhamBenh();
@@ -96,7 +103,66 @@ router.route("/lich-kham")
             data: {
                 page: 'lichkham',
                 title: "Lịch khám bệnh",
-                User: dataUser[0],
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
+                dslichkham: dslichkham
+            }
+        });
+    }, async function (req, res, next) {
+        if (req.query.user)
+            next();
+        else {
+            var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+            var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
+
+            res.render("main", {
+                data: {
+                    page: 'chontv',
+                    title: "Lịch khám bệnh",
+                    path: 'lich-kham',
+                    User: {
+                        ...dataUser[0],
+                        ID: req.session.User.id
+                    },
+                    TV: tvSSK
+                }
+            });
+        }
+    },async function (req, res, next) {
+        var dslichkham = (req.query.startD && req.query.endD) ? await BenhNhanModel.filterLichKhamBenh(req.session.User.id, req.query.startD, req.query.endD)
+                                                                : await BenhNhanModel.getLichKhamBenh(req.query.user);
+        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        
+        dslichkham.forEach(item => {
+            if (!item.ThoiGianPheDuyet && !item.ThoiGianHuyLich)
+                item.TrangThai = "Chờ phê duyệt";
+            else
+                if (!item.ThoiGianDenKhamTT && !item.ThoiGianHoanThanh)
+                    item.TrangThai = (item.ThoiGianPheDuyet && !item.ThoiGianHuyLich) ? "Đã phê duyệt" : "Đã hủy";
+                else
+                    if (item.SanSangKB == 0)
+                        item.TrangThai = (item.ThoiGianDenKhamTT && !item.ThoiGianHoanThanh) ? "Chuẩn bị khám" : "Hoàn thành";
+                    else
+                        switch (item.SanSangKB) {
+                            case 1:
+                                item.TrangThai = "Bệnh nhân sẵn sàng"
+                                break;
+                            case 2:
+                                item.TrangThai = "Đang khám bệnh"
+                                break;
+                        }
+        });
+
+        res.render("main", {
+            data: {
+                page: 'lichkham',
+                title: "Lịch khám bệnh",
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
                 dslichkham: dslichkham
             }
         });
@@ -193,6 +259,20 @@ router.route("/lich-kham/san-sang-kham-benh")
         }
     }]);
 
+router.route("/lich-kham/hoan-thanh-kham-benh")
+    .post([async function (req, res) {
+        try {
+            var result = await LichKhamBenhModel.hoanThanhLichKham(req.body.IDLKB);
+            if (result.changedRows == 1)
+                res.json({ success: "Thành công" });
+            else
+                res.json({ error: "Đã có lỗi xảy ra" });
+        }
+        catch (e) {
+            res.json({ error: "Đã có lỗi xảy ra" });
+        }
+    }]);
+
 router.route("/ds-dieu-tri")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
@@ -200,7 +280,10 @@ router.route("/ds-dieu-tri")
             data: {
                 page: 'dsdieutri',
                 title: "Danh sách bệnh nhân điều trị",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -211,12 +294,11 @@ router.route("/benh-nhan/:id/them-benh-dieu-tri")
         res.render("main", {
             data: {
                 page: 'addbenhdieutri',
-                child: {
-                    name: 'Nguyễn Văn A',
-                    path: '/thong-tin/10'
-                },
                 title: "Thêm bệnh điều trị",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -227,12 +309,12 @@ router.route("/benh-nhan/:id/them-ke-hoach")
         res.render("main", {
             data: {
                 page: 'themkehoach',
-                child: {
-                    name: 'Nguyễn Văn A',
-                    path: '/thong-tin/10'
-                },
+
                 title: "Thêm kế hoạch điều trị",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -243,12 +325,12 @@ router.route("/benh-nhan/:id/chi-tiet-ke-hoach")
         res.render("main", {
             data: {
                 page: 'ctkehoach',
-                child: {
-                    name: 'Nguyễn Văn A',
-                    path: '/thong-tin/10'
-                },
+
                 title: "Chi tiết kế hoạch điều trị",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -260,7 +342,10 @@ router.route("/messenger")
             data: {
                 page: 'messenger',
                 title: "Tin nhắn",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -272,42 +357,18 @@ router.route("/messenger/chat/:id")
         res.render("main", {
             data: {
                 page: 'chat',
-                child: {
-                    name: 'Messenger',
-                    path: '/messenger'
-                },
                 title: "Nhắn tin với anh A",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
 
-router.route("/messenger/videocall/:id")
-    .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
-        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-        res.render("videocall", {
-            data: {
-                title: "Nhắn tin với anh A",
-                User: dataUser[0]
-            }
-        });
-    }]);
 
 router.route("/phong-kham")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res, next) {
-        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-        if (dataUser[0].LoaiTK == 3)
-            next();
-        else {
-            res.render("main", {
-                data: {
-                    page: 'phongkham-bs',
-                    title: "Phòng khám",
-                    User: dataUser[0],
-                }
-            });
-        }
-    }, async function (req, res, next) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
         if (req.query.khoa)
             next();
@@ -389,7 +450,10 @@ router.route("/phong-kham/:id/lichkham")
             data: {
                 page: 'lichphongkham',
                 title: "Lịch phòng khám",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -397,11 +461,17 @@ router.route("/phong-kham/:id/lichkham")
 router.route("/thanh-vien")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
+
         res.render("main", {
             data: {
                 page: 'thanhviengd',
                 title: "Thành viên gia đình",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
+                TV: tvSSK
             }
         });
     }]);
@@ -415,7 +485,10 @@ router.route("/ke-hoach-dieu-tri")
                     data: {
                         page: 'lichtrinhdt',
                         title: "Bệnh đang điều trị",
-                        User: dataUser[0]
+                        User: {
+                            ...dataUser[0],
+                            ID: req.session.User.id
+                        },
                     }
                 });
             }
@@ -430,12 +503,18 @@ router.route("/ke-hoach-dieu-tri")
             }
         }
         else {
+            var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+            var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
             res.render("main", {
                 data: {
                     page: 'chontv',
                     title: "Kế hoạch điều trị",
                     path: 'ke-hoach-dieu-tri',
-                    User: dataUser[0]
+                    User: {
+                        ...dataUser[0],
+                        ID: req.session.User.id
+                    },
+                    TV: tvSSK
                 }
             });
         }
@@ -451,7 +530,10 @@ router.route("/chi-tiet-ke-hoach/:id")
                     path: '/thong-tin/10'
                 },
                 title: "Chi tiết kế hoạch điều trị",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);
@@ -460,9 +542,12 @@ router.route("/ho-so-suc-khoe")
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
         res.render("main", {
             data: {
-                page: 'hssuckhoe',
+                page: 'info',
                 title: "Hồ sơ sức khỏe",
-                User: dataUser[0]
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
             }
         });
     }]);

@@ -101,7 +101,7 @@
             </div>
         </div>
     </div>
-    <div style="text-align: right;margin-bottom: 20px;">
+    <div style="text-align: right;margin-bottom: 20px;" id="controlArea">
         <% if(data.chiTietLKB.TrangThai=="Chờ phê duyệt" && data.User.LoaiTK==3){%>
         <a class="btn btn-danger text-light" id="btn-huylich">Hủy đặt lịch</a>
         <%}%>
@@ -111,27 +111,26 @@
             data-bs-target="#exampleModal">Từ chối</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==3){%>
-        <a class="btn btn-primary text-light"  data-bs-toggle="modal"
-        data-bs-target="#qrcode">QR Khám bệnh</a>
+        <a class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#qrcode">QR Khám bệnh</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==2){%>
         <a class="btn btn-danger text-light" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#exampleModal">Hủy lịch hẹn</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Chuẩn bị khám" && data.User.LoaiTK==3){%>
-        <a class="btn btn-primary text-light" href="">Sẵn sàng khám bệnh</a>
+        <a class="btn btn-primary text-light" id="btnSanSang">Sẵn sàng khám bệnh</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.User.LoaiTK==2){%>
-        <a class="btn btn-primary text-light" href="">Bắt đầu khám bệnh</a>
+        <a class="btn btn-primary text-light" id="btnBatDauKB">Bắt đầu khám bệnh</a>
+        <a class="btn btn-warning text-light" data-bs-toggle="modal" data-bs-target="#videocall" id="btnThamGia" style="display:none">Tham gia Videocall</a>
+        <a class="btn btn-primary text-light" id="btnKetThucKhamBenh" style="display:none">Kết thúc khám bệnh</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.User.LoaiTK==3){%>
-        <a class="btn btn-warning text-light" href="">Đợi bác sĩ sẵn sàng...</a>
+        <a class="btn btn-warning text-light" data-bs-toggle="modal"
+        data-bs-target="#videocall">Tham gia Videocall</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Đang khám bệnh" && data.User.LoaiTK==2){%>
-        <a class="btn btn-success text-light" href="">Hoàn thành</a>
-        <%}%>
-        <% if(data.chiTietLKB.TrangThai=="Hoàn thành" && data.User.LoaiTK==2){%>
-        <a class="btn btn-primary text-light" href="">Cập nhập</a>
+        <a class="btn btn-success text-light" id="btnHoanThanh">Hoàn thành</a>
         <%}%>
     </div>
 
@@ -141,18 +140,21 @@
         <div class="tab-content tabcontent-border">
             <div class="table-responsive">
                 <table id="zero_config" class="table table-bordered" style="margin-bottom: 0 !important;">
-                    <tbody>
-                        <% if(data.chiTietLKB.TrangThai=="Đang khám bệnh" && data.User.LoaiTK==2){%>
+                    <tbody id="dsFile">
+                        <% if((data.chiTietLKB.TrangThai=="Hoàn thành" || data.chiTietLKB.TrangThai=="Đang khám bệnh" || data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng") && data.User.LoaiTK==2){%>
                         <tr>
                             <td>
-                                <input type="file" name="" id="" />
+                                <form method="post" id="formUpload">
+                                <input type="hidden" name="IDLKB" value="<%= data.chiTietLKB.ID %>"/>
+                                <input type="file" name="fileKetQua" accept=".doc,.docx,.pdf"/>
                                 <div class="form-group mt-3">
                                     <label>Ghi chú</label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="GhiChu"></textarea>
                                 </div>
                                 <div style="text-align: right;">
                                     <button class="btn btn-primary" type="submit">Tải lên</button>
                                 </div>
+                                </form>
                                 <br>
                             </td>
                         </tr>
@@ -166,50 +168,46 @@
                             </td>
                         </tr>
                         <% }); %>
-                    </tbody>
+                </tbody>
                 </table>
+    </div>
+</div>
+</div>
+
+<h4 class="page-title">Thuốc điều trị</h4>
+<div class="card">
+    <div class="row p-2">
+        <div class="py-2 col-md-5">
+            <h6><u>Danh sách thuốc điều trị</u></h6>
+
+            <ul style="padding-left: 0;" id="dsThuoc">
+                <% data.dsthuocdt.forEach(function(item){ %>
+                <li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc<%= item.IDThuoc %>"
+                    role="button" aria-expanded="false" aria-controls="Thuoc<%= item.IDThuoc %>" style="text-align: left;">
+                    <%= item.TenThuoc %>
+                </li>
+                <div class="collapse col-12" id="Thuoc<%= item.IDThuoc %>">
+                    <div class="card card-body" style="padding-top: 0px !important; text-align: justify;">
+                        <%= item.LieuLuong %>
+                    </div>
+                </div>
+                <% }); %>
+            </ul>
+
+        </div>
+        <% if((data.chiTietLKB.TrangThai=="Hoàn thành" || data.chiTietLKB.TrangThai=="Đang khám bệnh" || data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng") && data.User.LoaiTK==2){%>
+        <div class="py-2 col-md-7 px-2">
+            <h6><u>Thêm thuốc điều trị</u></h6><br>
+
+            <label for="">Chọn thuốc điều trị</label><br>
+            <select class="thuoc-combo col-12" id="IDThuoc"></select><br>
+            <label for="" class="mt-3">Liều lượng & Ghi chú</label><br>
+            <textarea class="form-control" id="GhiChu-Thuoc"></textarea>
+            <div style="text-align: right;">
+                <input id="btn-themthuoc" value="Lưu" class="btn btn-primary mt-4" />
             </div>
         </div>
-    </div>
-
-    <h4 class="page-title">Thuốc điều trị</h4>
-    <div class="card">
-        <div class="row p-2">
-            <div class="py-2 col-md-5">
-                <h6><u>Danh sách thuốc điều trị</u></h6>
-
-                <ul style="padding-left: 0;">
-                    <% data.dsthuocdt.forEach(function(item){ %>
-                    <li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc<%= item.IDThuoc %>" role="button"
-                        aria-expanded="false" aria-controls="Thuoc1" style="text-align: left;">
-                        <%= item.TenThuoc %>
-                    </li>
-                    <div class="collapse col-12" id="Thuoc<%= item.IDThuoc %>">
-                        <div class="card card-body" style="padding-top: 0px !important; text-align: justify;">
-                            <%= item.LieuLuong %>
-                        </div>
-                    </div>
-                    <% }); %>
-                </ul>
-   
-            </div>
-            <% if(data.chiTietLKB.TrangThai=="Đang khám bệnh" && data.User.LoaiTK==2){%>
-            <div class="py-2 col-md-7 px-2">
-                <h6><u>Thêm thuốc điều trị</u></h6><br>
-
-                <label for="">Chọn thuốc điều trị</label><br>
-                <select class="thuoc-combo col-12" name="IDThuoc" id="IDThuoc">
-                    <option value="AL">Alabama</option>
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                </select><br>
-                <label for="" class="mt-3">Liều lượng & Ghi chú</label><br>
-                <textarea class="form-control"></textarea>
-                <div style="text-align: right;">
-                    <input type="submit" name="btn-themthuoc" value="Lưu" class="btn btn-primary mt-4" />
-                </div>
-            </div>
-            <%}%>
+        <%}%>
         </div>
     </div>
 
@@ -234,15 +232,41 @@
     </div>
 </div>
 <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==3){%>
-<div class="modal fade" id="qrcode" tabindex="-1" aria-labelledby="qrcodeLabel" aria-hidden="true">
+        <div class="modal fade" id="qrcode" tabindex="-1" aria-labelledby="qrcodeLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qrcodeLabel">Xuất trình QR Code</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img
+                            src="https://chart.googleapis.com/chart?cht=qr&chl=<%= data.chiTietLKB.ID %>:<%= data.chiTietLKB.IDBN %>&choe=UTF-8&chs=200x200" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%}%>
+<% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng"){%>
+    <input type="hidden" data-bs-toggle="modal" data-bs-target="#videocall" id="btnVideocall"/>
+<div class="modal fade" id="videocall" tabindex="-1" aria-labelledby="videocallLabel" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="qrcodeLabel">Xuất trình QR Code</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="videocallLabel">Đang kết nối...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeVideo"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="https://chart.googleapis.com/chart?cht=qr&chl=<%= data.chiTietLKB.ID %>:<%= data.chiTietLKB.IDBN %>&choe=UTF-8&chs=200x200"/>
+                <h4>Tôi:</h4>
+                <video id="localStream" class="col-12"></video>
+                <a id="btnToanMH" style="cursor: pointer;margin-right: 20px;"><u>Toàn màn hình</u></a>
+                <a id="btnShareScreen" style="cursor: pointer;"><u>Chia sẻ màn hình</u></a>
+                <br /><br />
+
+                <h4>Đang gọi:</h4>
+                <h4 id="id2"></h4>
+                <video id="remoteStream" class="col-12"></video>
+                <br /><br />
             </div>
         </div>
     </div>
@@ -258,6 +282,15 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    var dsUser = [];
+    socket.on('DSONLINE', ds => {
+        dsUser = ds;
+    });
+    var currentPeer;
+    var localStream;
+    
+    $("#btnVideocall").click();
+
     $('#date1').datepicker({
         format: "dd/mm/yyyy",
         language: "vi",
@@ -272,7 +305,29 @@
     });
 
     $(".thuoc-combo").select2({
-        theme: "classic"
+        theme: "classic",
+        minimumInputLength: 2,
+        ajax: {
+            url: '/api/tim-thuoc',
+            dataType: 'json',
+            type: "GET",
+            data: function (str) {
+                return {
+                    q: str.term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.TenThuoc,
+                            id: item.ID,
+                        }
+                    })
+                };
+            }
+        }
     });
     $("#btn-pheduyet").click(function () {
         $.ajax({
@@ -322,6 +377,234 @@
                 location.reload();
             else
                 alert("Có lỗi xảy ra");
+        });
+    });
+    $("#btnSanSang").click(function () {
+        $.ajax({
+            url: '/lich-kham/san-sang-kham-benh',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDLKB: <%= data.chiTietLKB.ID %>,
+                IDBN: <%= data.chiTietLKB.IDBN %>
+        }
+        }).done(function (ketqua) {
+            if (ketqua.success)
+                location.reload();
+            else
+                alert("Có lỗi xảy ra");
+        });
+    });
+
+    $("#btnBatDauKB").click(function () {
+        $.ajax({
+            url: '/lich-kham/san-sang-kham-benh',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDLKB: <%= data.chiTietLKB.ID %>,
+                IDBN: <%= data.chiTietLKB.IDBN %>
+        }
+        }).done(function (ketqua) {
+            if (ketqua.success) {
+        <%if (!data.chiTietLKB.HinhThuc) {%>
+        var IDBN = '<%= data.chiTietLKB.IDBN %>';
+                    var IDBS = '<%= data.chiTietLKB.IDBS %>';
+                    var IDTK = '<%= data.User.ID %>';
+
+                    if (IDBN != IDTK) {
+                        var indexRemote = dsUser.findIndex(e => e.id === IDBN);
+                        var indexLocal = dsUser.findIndex(e => e.id === IDTK);
+                    }
+                    else {
+                        var indexRemote = dsUser.findIndex(e => e.id === IDBS);
+                        var indexLocal = dsUser.findIndex(e => e.id === IDTK);
+                    }
+                    if (indexRemote != -1)
+                        var remoteID = dsUser[indexRemote].peerID;
+                    if (indexLocal != -1)
+                        var localID = dsUser[indexLocal].peerID;
+
+
+                    if (remoteID && localID){
+
+                        $("#btnVideocall").click();
+                        openStream().then((stream) => {
+                            localStream=stream;
+                            playVideo("localStream", stream);
+                            var call = peer.call(remoteID, stream);
+                            call.on('stream', function (remoteStream) {
+                                currentPeer=call.peerConnection;
+                                playVideo("remoteStream", remoteStream);
+                                $("#videocallLabel").html("Đang gọi điện");
+                            });
+                        });
+                        $("#btnBatDauKB").css("display","none");
+                    }
+                    else
+                        alert('Bệnh nhân không trực tuyến');
+        <%}%>
+            }
+            else
+                alert("Có lỗi xảy ra");
+        });
+    });
+
+    $("#btnKetThucKhamBenh").click(()=>{
+        location.reload();
+    });
+    function openStream() {
+        var config = { video: true, audio: false };
+        return navigator.mediaDevices.getUserMedia(config);
+    }
+    function playVideo(idVideoTag, stream) {
+        const video = document.getElementById(idVideoTag);
+        video.srcObject = stream;
+        video.play();
+    }
+    
+    peer.on('call', function (call) {
+        openStream().then((stream) => {
+            localStream=stream;
+            call.answer(stream);
+            playVideo("localStream", stream);
+            call.on('stream', function (remoteStream) {
+                currentPeer=call.peerConnection;
+                playVideo("remoteStream", remoteStream);
+                $("#videocallLabel").html("Đang gọi điện");
+            });
+        });
+    });
+
+    $("#closeVideo").click(()=>{
+        $("#btnThamGia").css("display","inline-block");
+        $("#btnKetThucKhamBenh").css("display","inline-block");
+    });
+
+    $("#btnToanMH").click(()=>{
+        var localVideo=document.querySelector('#localStream');
+        var remoteVideo=document.querySelector('#remoteStream');
+
+        localVideo.requestPictureInPicture();
+        
+        if (remoteVideo.requestFullscreen) {
+            remoteVideo.requestFullscreen();
+        } else if (remoteVideo.webkitRequestFullscreen) { 
+            remoteVideo.webkitRequestFullscreen();
+        } else if (remoteVideo.msRequestFullscreen) { 
+            remoteVideo.msRequestFullscreen();
+        }
+    });
+
+    $("#btnShareScreen").click(()=>{
+        var config = { 
+            video: {
+                cursor:'always'
+            }, 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true
+            } };
+        navigator.mediaDevices.getDisplayMedia(config)
+        .then(stream => {
+            let videoTrack = stream.getVideoTracks()[0];
+            videoTrack.onended = function(){
+                stopScreenShare(stream);
+            }
+            let sender = currentPeer.getSenders().find(function(s){
+                return s.track.kind=videoTrack.kind;
+            });
+            sender.replaceTrack(videoTrack);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    });
+
+    function stopScreenShare(stream){
+        let videoTrack=localStream.getVideoTracks()[0];
+        var sender = currentPeer.getSenders().find(function(s){
+            return s.track.kind == videoTrack.kind;
+        });
+        sender.replaceTrack(videoTrack);
+    }
+
+    $("#formUpload").submit(function(evt){	 
+        evt.preventDefault();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/api/upload-file',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (response) {
+                if(response.success){
+                    var html = '<tr>'+
+                                 '<td>'+
+                                    '<a href="'+response.data.DuongDan+'" target="_blank">'+response.data.TenFile+'</a><br>'+
+                                    '<em>'+response.data.ThoiGian+'</em>'+
+                                    '<p>'+response.data.GhiChu+'</p>'+
+                                  '</td>'+
+                                '</tr>';
+                    $("#dsFile").append(html);
+                    toastr["success"](response.success);
+                }
+                else{
+                    toastr["error"](response.error);
+                }
+            }
+        });                             
+        return false;                                                           
+    });
+
+    $("#btn-themthuoc").click(()=>{
+        $.ajax({
+            url: '/api/them-thuoc-dieu-tri',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDLKB: <%= data.chiTietLKB.ID %>,
+                IDThuoc: $("#IDThuoc").val(),
+                LieuLuong: $("#GhiChu-Thuoc").val(),
+            }
+        }).done(function (ketqua) {
+            if(ketqua.success){
+                var html = '<li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc'+ketqua.data.IDThuoc+'"'+
+                            'role="button" aria-expanded="false" aria-controls="Thuoc'+ketqua.data.IDThuoc+'" style="text-align: left;">'+
+                            ketqua.data.Thuoc[0].TenThuoc+'</li>'+
+                            '<div class="collapse col-12" id="Thuoc'+ketqua.data.IDThuoc+'">'+
+                                '<div class="card card-body" style="padding-top: 0px !important; text-align: justify;">'+
+                                    ketqua.data.LieuLuong+'</div>'+
+                            '</div>';
+                            
+                $("#dsThuoc").append(html);
+                toastr["success"](ketqua.success);
+            }
+            else{
+                toastr["error"](ketqua.error);
+            }
+        });
+    });
+
+    $("#btnHoanThanh").click(()=>{
+        $.ajax({
+            url: '/lich-kham/hoan-thanh-kham-benh',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDLKB: <%= data.chiTietLKB.ID %>
+            }
+        }).done(function (ketqua) {
+            if(ketqua.success){
+                location.reload();
+            }
+            else{
+                toastr["error"](ketqua.error);
+            }
         });
     });
 </script>

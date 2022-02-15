@@ -4,14 +4,14 @@ var TaiKhoanModel = require("../models/taikhoan");
 
 const Storage = multer.diskStorage({
     destination(req, file, callback) {
-        callback(null, appRoot + '/public/img');
+        callback(null, appRoot + '/public/files');
     },
     filename(req, file, callback) {
         callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
     },
 });
 
-function uploadAnh() {
+function uploadFile() {
     return multer({ storage: Storage });
 }
 
@@ -68,7 +68,7 @@ function usernameValidation(username) {
 module.exports = {
     setSessionDangNhap: setSessionDangNhap,
     dangXuat: dangXuat,
-    uploadAnh: uploadAnh,
+    uploadFile: uploadFile,
     passwordValidation: passwordValidation,
     usernameValidation: usernameValidation,
     telephoneValidation: telephoneValidation,

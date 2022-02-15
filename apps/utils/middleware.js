@@ -12,7 +12,6 @@ function kiemTraDangNhap(req, res, next) {
 
 async function rolePemission(req, res, next) {
     var routeName = req.app.path() + (req.route.path || req.route.regexp && req.route.regexp.source);
-    console.log(routeName);
 
     if (routeName.indexOf("lich-kham/chi-tiet-lich-kham") != -1) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);

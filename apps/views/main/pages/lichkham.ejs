@@ -53,7 +53,7 @@
                             </td>
                             <td><%= item.TrangThai %></td>
                             <td>
-                                <a href="/lich-kham/chi-tiet-lich-kham/<%= item.ID %>">
+                                <a href=" /lich-kham/chi-tiet-lich-kham/<%= item.ID %>">
                     <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
                     </a>
                     </td>
@@ -83,7 +83,13 @@
             autoclose: true
         });
         $("#dateFilter").click(function () {
-            location.href = "/lich-kham?startD=" + $("#start_d").val() + "&endD=" + $("#end_d").val();
+            var qd = {};
+            location.search.substr(1).split("&").forEach(function (item) { var k = item.split("=")[0], v = decodeURIComponent(item.split("=")[1]); (k in qd) ? qd[k].push(v) : qd[k] = [v] });
+
+            if(qd.user[0])
+                location.href = "/lich-kham?user="+qd.user[0]+"&startD=" + $("#start_d").val() + "&endD=" + $("#end_d").val();
+            else
+                location.href = "/lich-kham?startD=" + $("#start_d").val() + "&endD=" + $("#end_d").val();
         });
 
         var qd = {};

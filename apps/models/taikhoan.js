@@ -43,6 +43,17 @@ function addSSK(Username) {
 
     return defer.promise;
 }
+function getSSK(Username) {
+    var defer = q.defer();
+    conn.query('SELECT IDSSK, IDTK, HoTen, AnhDaiDien FROM chitietsosuckhoe INNER JOIN sosuckhoe ON chitietsosuckhoe.IDSSK=sosuckhoe.ID INNER JOIN taikhoan ON chitietsosuckhoe.IDTK=taikhoan.ID WHERE sosuckhoe.Username=?', Username, function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
 function lkTaiKhoan(IDSSK, IDTK) {
     var defer = q.defer();
     conn.query('INSERT INTO chitietsosuckhoe VALUES(?,?)', [IDSSK, IDTK], function (error, results, fields) {
@@ -178,5 +189,6 @@ module.exports = {
     getChiTietTaiKhoan: getChiTietTaiKhoan,
     addBenhNhan: addBenhNhan,
     addSSK: addSSK,
-    lkTaiKhoan: lkTaiKhoan
+    lkTaiKhoan: lkTaiKhoan,
+    getSSK: getSSK
 }

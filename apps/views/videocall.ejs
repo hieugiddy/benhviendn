@@ -1,1 +1,60 @@
-videocall
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.js"></script>
+    <script src="https://cdn.socket.io/1.0.0/socket.io.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h4 id="id1"></h4>
+    <video id="localStream" width="300" controls></video>
+    <br /><br />
+    <h4 id="id2"></h4>
+    <video id="remoteStream" width="300" controls></video>
+    <br /><br />
+
+    <input type="text" id="remoteID" />
+    <button id="btn-call">Call</button>
+</body>
+<script>
+    
+    function openStream() {
+        var config = { video: true, audio: true };
+        return navigator.mediaDevices.getUserMedia(config);
+    }
+    function playVideo(idVideoTag, stream) {
+        const video = document.getElementById(idVideoTag);
+        video.srcObject = stream;
+        video.play();
+    }
+
+    var peer = new Peer();
+    peer.on('open', id => socket.emit('a',id));
+
+    $("#btn-call").click(() => {
+        openStream().then((stream) => {
+            playVideo("localStream", stream);
+            var call = peer.call($("#remoteID").val(), stream);
+            call.on('stream', function (remoteStream) {
+                playVideo("remoteStream", remoteStream);
+            });
+        });
+    });
+
+    peer.on('call', function (call) {
+        openStream().then((stream) => {
+            call.answer(stream);
+            playVideo("localStream", stream);
+            call.on('stream', function (remoteStream) {
+                playVideo("remoteStream", remoteStream);
+            });
+        });
+    });
+</script>
+
+</html>

@@ -3,22 +3,25 @@
         <div class="col-lg-2 col-sm-3 col-6 px-md-2">
             <div class="card card-hover">
                 <div class="box bg-light text-center">
-                    <a href="/<%= data.path %>?user=1" class="text-dark">
-                        <img src="http://placehold.it/150x150" alt="" class="img-avatar" /><br>
+                    <a href="/<%= data.path %>?user=<%= data.User.ID %>" class="text-dark">
+                        <img src="<%= data.User.AnhDaiDien %>" alt="" class="img-avatar" /><br>
                         <p>Tôi</p>
                     </a>
                 </div>
             </div>
         </div>
+ 
+        <% data.TV.forEach(function(item){ %>
         <div class="col-lg-2 col-sm-3 col-6 px-md-2">
             <div class="card card-hover">
                 <div class="box bg-light text-center">
-                    <a href="/<%= data.path %>?user=2" class="text-dark">
-                        <img src="http://placehold.it/150x150" alt="" class="img-avatar" /><br>
-                        <p>Đặng Huy</p>
+                    <a href="/<%= data.path %>?user=<%= item.IDTK %>" class="text-dark">
+                        <img src="<%= item.AnhDaiDien %>" alt="" class="img-avatar" /><br>
+                        <p><%= item.HoTen %></p>
                     </a>
                 </div>
             </div>
         </div>
+        <% }); %>
     </div>
 </div>

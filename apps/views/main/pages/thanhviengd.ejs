@@ -5,16 +5,18 @@
 
 <div class="container-fluid">
     <div class="row">
+        <% data.TV.forEach(function(item){ %>
         <div class="col-lg-2 col-sm-3 col-6 px-md-2">
             <div class="card card-hover">
                 <div class="box bg-light text-center">
-                    <a href="info.html" class="text-dark">
-                        <img src="http://placehold.it/150x150" alt="" class="img-avatar" /><br>
-                        <p>Đặng Huy</p>
+                    <a href="/ho-so-suc-khoe?user=<%= item.IDTK %>" class="text-dark">
+                        <img src="<%= item.AnhDaiDien %>" alt="" class="img-avatar" /><br>
+                        <p><%= item.HoTen %></p>
                     </a>
                 </div>
             </div>
         </div>
+        <% }); %>
         <div class="col-lg-2 col-sm-3 col-6 px-md-2">
             <div class="card card-hover" style="border: 1px dashed #333;">
                 <div class="box bg-light text-center">
