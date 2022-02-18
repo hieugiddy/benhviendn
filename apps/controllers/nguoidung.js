@@ -258,8 +258,10 @@ router.route("/lich-kham/san-sang-kham-benh")
             if (status[0].SanSangKB == 1 || status[0].SanSangKB == 0) {
                 var sanSang = await LichKhamBenhModel.sanSangKhamBenh(req.body.IDLKB, req.body.IDBN);
 
-                if (sanSang.changedRows == 1)
+                if (sanSang.changedRows == 1){
+                    var updateLichKham = await LichKhamBenhModel.xacNhanDenKham(req.body.IDLKB);
                     res.json({ success: "Thành công" });
+                }
                 else
                     res.json({ error: "Đã có lỗi xảy ra" });
             }

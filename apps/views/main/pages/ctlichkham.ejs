@@ -109,7 +109,7 @@
         <a class="btn btn-danger text-light" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#exampleModal">Từ chối</a>
         <%}%>
-        <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==3){%>
+        <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==3 && data.chiTietLKB.HinhThuc==1){%>
         <a class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#qrcode">QR Khám bệnh</a>
         <a class="btn btn-dark text-light" id="btnInLich">In lịch hẹn</a>
         <%}%>
@@ -117,7 +117,7 @@
         <a class="btn btn-danger text-light" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#exampleModal">Hủy lịch hẹn</a>
         <%}%>
-        <% if(data.chiTietLKB.TrangThai=="Chuẩn bị khám" && data.User.LoaiTK==3){%>
+        <% if((data.chiTietLKB.TrangThai=="Chuẩn bị khám" || (data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.chiTietLKB.HinhThuc==0)) && data.User.LoaiTK==3){%>
         <a class="btn btn-primary text-light" id="btnSanSang">Sẵn sàng khám bệnh</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.User.LoaiTK==2){%>
@@ -125,7 +125,7 @@
         <a class="btn btn-warning text-light" data-bs-toggle="modal" data-bs-target="#videocall" id="btnThamGia" style="display:none">Tham gia Videocall</a>
         <a class="btn btn-primary text-light" id="btnKetThucKhamBenh" style="display:none">Kết thúc khám bệnh</a>
         <%}%>
-        <% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.User.LoaiTK==3){%>
+        <% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.User.LoaiTK==3 && data.chiTietLKB.HinhThuc==0){%>
         <a class="btn btn-warning text-light" data-bs-toggle="modal"
         data-bs-target="#videocall">Tham gia Videocall</a>
         <%}%>
@@ -246,7 +246,7 @@
             </div>
         </div>
         <%}%>
-<% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng"){%>
+<% if(data.chiTietLKB.TrangThai=="Bệnh nhân sẵn sàng" && data.chiTietLKB.HinhThuc==0){%>
     <input type="hidden" data-bs-toggle="modal" data-bs-target="#videocall" id="btnVideocall"/>
 <div class="modal fade" id="videocall" tabindex="-1" aria-labelledby="videocallLabel" aria-hidden="true" >
     <div class="modal-dialog">
@@ -406,7 +406,7 @@
         }).done(function (ketqua) {
             if (ketqua.success) {
         <%if (!data.chiTietLKB.HinhThuc) {%>
-        var IDBN = '<%= data.chiTietLKB.IDBN %>';
+                    var IDBN = '<%= data.chiTietLKB.IDBN %>';
                     var IDBS = '<%= data.chiTietLKB.IDBS %>';
                     var IDTK = '<%= data.User.ID %>';
 
@@ -441,6 +441,9 @@
                     }
                     else
                         alert('Bệnh nhân không trực tuyến');
+        <%}%>
+        <%if (data.chiTietLKB.HinhThuc) {%>
+            location.reload();
         <%}%>
             }
             else
