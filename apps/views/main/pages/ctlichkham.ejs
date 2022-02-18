@@ -1,7 +1,6 @@
 <!-- this CSS -->
 <link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 
-
 <div class="container-fluid">
     <div class="card">
         <!-- Tab panes -->
@@ -112,6 +111,7 @@
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==3){%>
         <a class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#qrcode">QR Khám bệnh</a>
+        <a class="btn btn-dark text-light" id="btnInLich">In lịch hẹn</a>
         <%}%>
         <% if(data.chiTietLKB.TrangThai=="Đã phê duyệt" && data.User.LoaiTK==2){%>
         <a class="btn btn-danger text-light" class="btn btn-primary" data-bs-toggle="modal"
@@ -182,7 +182,7 @@
 
             <ul style="padding-left: 0;" id="dsThuoc">
                 <% data.dsthuocdt.forEach(function(item){ %>
-                <li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc<%= item.IDThuoc %>"
+                <li class="btn btn-light col-12 thuocItem" data-bs-toggle="collapse" href="#Thuoc<%= item.IDThuoc %>"
                     role="button" aria-expanded="false" aria-controls="Thuoc<%= item.IDThuoc %>" style="text-align: left;">
                     <%= item.TenThuoc %>
                 </li>
@@ -240,8 +240,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <img
-                            src="https://chart.googleapis.com/chart?cht=qr&chl=<%= data.chiTietLKB.ID %>:<%= data.chiTietLKB.IDBN %>&choe=UTF-8&chs=200x200" />
+                        <img src="https://chart.googleapis.com/chart?cht=qr&chl=<%= data.chiTietLKB.ID %>:<%= data.chiTietLKB.IDBN %>&choe=UTF-8&chs=200x200" />
                     </div>
                 </div>
             </div>
@@ -289,7 +288,6 @@
     var currentPeer;
     var localStream;
     
-    $("#btnVideocall").click();
 
     $('#date1').datepicker({
         format: "dd/mm/yyyy",
@@ -606,5 +604,20 @@
                 toastr["error"](ketqua.error);
             }
         });
+    });
+
+    $("#btnInLich").click(()=>{
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>Lịch hẹn khám bệnh</title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<center><img src="https://chart.googleapis.com/chart?cht=qr&chl=<%= data.chiTietLKB.ID %>:<%= data.chiTietLKB.IDBN %>&choe=UTF-8&chs=200x200"/></center>');
+        printWindow.document.write('<p><strong>Bệnh nhân:</strong> <%= data.chiTietLKB.HoTenBN %></p>');
+        printWindow.document.write('<p><strong>Bác sĩ khám:</strong> <%= data.chiTietLKB.HoTenBS %></p>');
+        printWindow.document.write('<p><strong>Phòng khám:</strong> <%= data.chiTietLKB.TenPhongKham %></p>');
+        printWindow.document.write('<p><strong>Ngày hẹn khám:</strong> <%= data.chiTietLKB.ThoiGianKhamBenh %></p>');
+        printWindow.document.write('<p><strong>Khung giờ khám bệnh:</strong> <%= data.chiTietLKB.GioBatDau %>-<%= data.chiTietLKB.GioKetThuc %></p>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
     });
 </script>

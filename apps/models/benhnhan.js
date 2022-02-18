@@ -36,8 +36,74 @@ function chiTietLKB(IDBN,IDLKB) {
 
     return defer.promise;
 }
+
+function getDSBenhNhan() {
+    var defer = q.defer();
+    conn.query('SELECT * FROM taikhoan INNER JOIN chitietsosuckhoe ON taikhoan.ID=chitietsosuckhoe.IDTK WHERE LoaiTK=3', function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getDSBenh(IDBN) {
+    var defer = q.defer();
+    conn.query('SELECT DISTINCT benh.ID, TenBenh FROM benh INNER JOIN kehoachdieutri ON benh.ID=kehoachdieutri.IDBenh WHERE IDBenhNhan=?',[IDBN], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getKHBenh(IDBN,IDBenh) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM kehoachdieutri WHERE IDBenhNhan=? AND IDBenh=?',[IDBN,IDBenh], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getCTKH(ID) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM kehoachdieutri WHERE ID=?',[ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getBenhDT(IDBN) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM benh WHERE ID IN (SELECT DISTINCT IDBenh FROM kehoachdieutri WHERE IDBenhNhan=?)',[IDBN], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
 module.exports = {
     getLichKhamBenh: getLichKhamBenh,
     filterLichKhamBenh:filterLichKhamBenh,
-    chiTietLKB:chiTietLKB
+    chiTietLKB:chiTietLKB,
+    getDSBenhNhan: getDSBenhNhan,
+    getDSBenh: getDSBenh,
+    getKHBenh: getKHBenh,
+    getCTKH: getCTKH,
+    getBenhDT: getBenhDT
 }

@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/static/assets/libs/select2/dist/css/select2.min.css" />
 
 <div class="container-fluid">
+    <form method="post">
     <div class="card">
         <!-- Tab panes -->
         <div class="py-2">
@@ -12,15 +13,18 @@
                         <tbody>
                             <tr>
                                 <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
-                                <td>2929 - N.V.A</td>
+                                <td><%= data.BN.ID %> - <%= data.BN.HoTen %></td>
+                                <input type="hidden" name="IDBenhNhan" value="<%= data.BN.ID %>">
                             </tr>
                             <tr>
                                 <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
-                                <td><a href="">21 - N.Văn B</a></td>
+                                <td><a href=""><%= data.User.ID %> - <%= data.User.HoTen %></a></td>
+                                <input type="hidden" name="IDBacSiDieuTri" value="<%= data.User.ID %>">
                             </tr>
                             <tr>
                                 <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
-                                <td><a href="">Viêm gan B</a></td>
+                                <td><a href=""><%= data.Benh.TenBenh %></a></td>
+                                <input type="hidden" name="IDBenh" value="<%= data.Benh.ID %>">
                             </tr>
                             <tr>
                                 <th scope="row" style="vertical-align: middle;"><strong>Thời gian:</strong></th>
@@ -40,28 +44,28 @@
                             <tr>
                                 <th scope="row" style="vertical-align: middle;"><strong>Tên kế hoạch:</strong></th>
                                 <td>
-                                    <input type="text" class="form-control" id="tenkehoach" placeholder="Tên kế hoạch">
+                                    <input type="text" class="form-control" name="TenKeHoach" value="<%= data.KH.TenKeHoach %>" placeholder="Tên kế hoạch">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row" style="vertical-align: middle;"><strong>Phương pháp điều trị:</strong>
                                 </th>
                                 <td>
-                                    <input type="text" class="form-control" id="phuongphapdieutri"
+                                    <input type="text" class="form-control" name="PhuongPhapDieuTri" value="<%= data.KH.PhuongPhapDieuTri %>"
                                         placeholder="Phương pháp điều trị">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"><strong>Nội dung điều trị:</strong></th>
                                 <td>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="NoiDungDieuTri"><%= data.KH.NoiDungDieuTri %></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"><strong>Nhập viện:</strong></th>
                                 <td>
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="nhapvien">
+                                        <input type="checkbox" class="form-check-input" id="nhapvien" name="NhapVien" <% if(data.KH.NhapVien){%> checked<%}%>>
                                         <label class="form-check-label mb-0" for="nhapvien">Cần phải nhập viện</label>
                                     </div>
                                 </td>
@@ -70,7 +74,7 @@
                                 <th scope="row"><strong>Đã hoàn thành:</strong></th>
                                 <td>
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="hoanthanh">
+                                        <input type="checkbox" class="form-check-input" id="hoanthanh" name="TrangThai" <% if(data.KH.TrangThai){%> checked<%}%>>
                                         <label class="form-check-label mb-0" for="hoanthanh">Yes</label>
                                     </div>
                                 </td>
@@ -81,57 +85,86 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-primary text-light" href="" style="float: right;margin: 20px;">Lưu</a>
+    <% if(data.KH.IDBacSiDieuTri==data.User.ID){%>
+    <input class="btn btn-primary text-light" type="submit" style="float: right;margin: 20px;" value="Lưu" name="btnCapNhapKH">
+    <%}%>
+    </form>
     <div style="clear: both;"></div>
-
-    <h4 class="page-title">Thuốc điều trị</h4>
+    <%if(data.User.LoaiTK==2){%>
+    <h4 class="page-title">Đặt lịch hẹn</h4>
+    <form method="post" action="/phong-kham">
     <div class="card">
-        <div class="row p-2">
-            <div class="py-2 col-md-5">
-                <h6><u>Danh sách thuốc điều trị</u></h6>
-
-                <ul style="padding-left: 0;">
-                    <li class="btn btn-light col-12" data-bs-toggle="collapse" href="#Thuoc1" role="button"
-                        aria-expanded="false" aria-controls="Thuoc1" style="text-align: left;">
-                        Paractamol
-                    </li>
-                </ul>
-                <div class="collapse col-12" id="Thuoc1">
-                    <div class="card card-body" style="padding-top: 0px !important; text-align: justify;">
-                        <ul>
-                            <li>1 hộp (100 viên)</li>
-                            <li>Ngày uống 2 lần</li>
-                            <li>Mỗi lần uống 3 viên</li>
-                        </ul>
-                    </div>
+        <div class="py-2">
+            <div class="row">
+                <div class="col-md-6 px-2">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
+                                <td><%= data.BN.ID %> - <%= data.BN.HoTen %></td>
+                                <input type="hidden" name="IDBenhNhan" value="<%= data.BN.ID %>">
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
+                                <td><a href=""><%= data.User.ID %> - <%= data.User.HoTen %></a></td>
+                                <input type="hidden" name="IDBacSi" value="<%= data.User.ID %>">
+                            </tr>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
+                                <td><a href=""><%= data.Benh.TenBenh %></a></td>
+                                <input type="hidden" name="BenhCanKham" value="<%= data.Benh.TenBenh %>">
+                            </tr>
+                            <input type="hidden" name="TrieuChung" value="<%= data.KH.NoiDungDieuTri %>"/>
+                            <input type="hidden" name="IDKH" value="<%= data.KH.ID %>"/>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            <div class="py-2 col-md-7 px-2">
-                <h6><u>Thêm thuốc điều trị</u></h6><br>
+                <div class="col-md-6 px-2">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Ngày khám bênh:</strong></th>
+                                <td>
+                                    <input type="text" class="form-control" name="ThoiGianKhamBenh" id="NgayKhamBenh"
+                                    readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="vertical-align: middle;"><strong>Hình thức:</strong>
+                                </th>
+                                <td>
+                                    <select id="HinhThuc" name="HinhThuc" class="form-control">
+                                        <option value="-1">---Lựa chọn---</option>
+                                        <option value="0">Online</option>
+                                        <option value="1">Tại bệnh viện</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Khung giờ:</strong></th>
+                                <td>
+                                    <select id="KhungGio" name="IDKhungGio" class="form-control">
 
-                <label for="">Chọn thuốc điều trị</label><br>
-                <select class="thuoc-combo col-12" name="IDThuoc" id="IDThuoc">
-                    <option value="AL">Alabama</option>
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                </select><br>
-                <label for="" class="mt-3">Liều lượng & Ghi chú</label><br>
-                <textarea class="form-control"></textarea>
-                <div style="text-align: right;">
-                    <input type="submit" name="btn-themthuoc" value="Lưu" class="btn btn-primary mt-4" />
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
+    <input class="btn btn-primary text-light" type="submit" style="float: right;margin: 20px;" value="Đặt hẹn" name="btnDatHen"/>
+    </form>
+    <div style="clear: both;"></div>
+    <%}%>
     <h4 class="page-title">Lịch hẹn điều trị</h4>
     <div class="card">
         <div class="py-2">
             <ul>
-                <li> <a href="detail_lich.html">Điều trị xạ trị 1</a> (<em>2021-10-12 12:00</em>) - <strong>Chờ
-                        khám</strong></li>
-                <li> <a href="detail_lich.html">Điều trị xạ trị 1</a> (<em>2021-10-09 12:00</em>) - <strong>Bị
-                        hủy</strong></li>
+                <% data.Lich.forEach(function(item){ %>
+                <li> <a href="/lich-kham/chi-tiet-lich-kham/<%= item.ID %>"><%= item.TenKeHoach %></a> (<em><%= item.ThoiGianKhamBenh %></em>) - <strong><%= item.TrangThai %></strong></li>
+                <% }); %>
             </ul>
         </div>
     </div>
@@ -145,12 +178,55 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $('#thoigian1').datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd/mm/yyyy",
     });
     $('#thoigian2').datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd/mm/yyyy",
     });
     $(".thuoc-combo").select2({
         theme: "classic"
     });
+
+    var ThoiGian="<%= data.KH.ThoiGian %>";
+    var startDay=ThoiGian.split("-")[0].trim();
+    var endDay=ThoiGian.split("-")[1].trim()
+    $("#thoigian1").val(startDay)
+    $("#thoigian2").val(endDay)
+
+    $('#NgayKhamBenh').datepicker({
+        format: "dd/mm/yyyy",
+        minDate: startDay,
+        maxDate: endDay
+    });
+    $('#NgayKhamBenh').on('change', function () {
+        $('#KhungGio').html('');
+        if ($('#HinhThuc').val()) {
+            getKhungGio();
+        }
+    });
+    $('#HinhThuc').on('change', function () {
+        $('#KhungGio').html('');
+        if ($('#NgayKhamBenh').val()) {
+            getKhungGio();
+        }
+    });
+    function getKhungGio() {
+        $.ajax({
+            url: '/phong-kham',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDBacSi:<%= data.User.ID %>,
+                ThoiGianKhamBenh: $("#NgayKhamBenh").val(),
+                HinhThuc: $("#HinhThuc").val(),
+                GetAjax: true
+            }
+        }).done(function (ketqua) {
+            ketqua.forEach(element => {
+                $('#KhungGio').html($('#KhungGio').html() + '<option value="' + element.ID + '">' + element.GioBatDau + ' đến ' + element.GioKetThuc + '</option>');
+            });
+        });
+    }
+
+    
 </script>

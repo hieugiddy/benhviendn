@@ -19,18 +19,24 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>12</td>
-              <td>Đặng Minh Hiếu</td>
-              <td>Nam</td>
-              <td>200100211</td>
-              <td>9199</td>
+            <% data.BN.forEach(function(item){ %>
+            <tr> 
+              <td><%= item.ID %></td>
+              <td><%= item.HoTen %></td>
               <td>
-                <a href="/thong-tin/10">
+                <% if(item.GioiTinh==1){ %> Nam <%}%>
+                <% if(item.GioiTinh==0){ %> Nữ <%}%>
+                <% if(item.GioiTinh==2){ %> Khác <%}%>
+              </td>
+              <td><%= item.CMND %></td>
+              <td><%= item.IDSSK %></td>
+              <td>
+                <a href="/thong-tin/<%= item.ID %>">
                   <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
                 </a>
               </td>
             </tr>
+            <% }); %>
           </tbody>
         </table>
       </div>

@@ -1,0 +1,227 @@
+<!-- this CSS -->
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="card">
+        <form method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="image-container text-center col-lg-2 col-md-3 col-sm-4 mb-3">
+                        <img src="<%= data.User.AnhDaiDien %>" id="imgProfile"
+                            style="width: 150px; height: 150px; object-fit: cover" class="img-thumbnail mb-2" />
+                        <label for="img-avatar" id="label-avatar" class="btn btn-warning">Thay đổi ảnh</label>
+                        <input type="file" name="AnhDaiDien" id="img-avatar" accept="image/*" hidden />
+
+                        <input type="button" value="Hủy" class="btn btn-danger" id="clearImg" style="display: none;" />
+                    </div>
+                    <div class="userData ml-3 col-lg-10 col-md-6 col-sm-8">
+                        <div class="tab-pane active py-20" id="hoso" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6 px-2">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><strong>Mã định danh:</strong></th>
+                                                <td><%= data.User.ID %></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Số thẻ BHYT <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="SoTheBHYT"
+                                                        value="<%= data.BN.SoTheBHYT %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Họ tên <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="HoTen"
+                                                        value="<%= data.User.HoTen %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Tên đăng nhập:</strong></th>
+                                                <td>@<%= data.User.Username %></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="vertical-align: middle;"><strong>Ngày sinh
+                                                        <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="input-sm form-control" name="NgaySinh"
+                                                        id="ngSinh" placeholder="Chọn ngày sinh" readonly />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Giới tính <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <select name="GioiTinh" id="GioiTinh" class="form-control">
+                                                        <option value="1">Nam</option>
+                                                        <option value="0">Nữ</option>
+                                                        <option value="2">Khác</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Số điện thoại <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="SoDT"
+                                                        value="<%= data.User.SoDT %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>CMND/CCID <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="CMND"
+                                                        value="<%= data.User.CMND %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Email:</strong></th>
+                                                <td>
+                                                    <input type="email" class="form-control" name="Email"
+                                                        value="<%= data.User.Email %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Địa chỉ <sup>(*)</sup>:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="DiaChi"
+                                                        value="<%= data.User.DiaChi %>" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><strong>Đường huyết:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="DuongHuyet"
+                                                        value="<%= data.BN.DuongHuyet %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>SPO2:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="SPO2"
+                                                        value="<%= data.BN.SPO2 %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Huyết áp:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="HuyetAp"
+                                                        value="<%= data.BN.HuyetAp %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhiệt độ:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhietDo"
+                                                        value="<%= data.BN.NhietDo %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhịp tim:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhipTim"
+                                                        value="<%= data.BN.NhipTim %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chiều cao:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ChieuCao"
+                                                        value="<%= data.BN.ChieuCao %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Cân nặng:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="CanNang"
+                                                        value="<%= data.BN.CanNang %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chỉ số BMI:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ChiSoBMI"
+                                                        value="<%= data.BN.ChiSoBMI %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhomMau"
+                                                        value="<%= data.BN.NhomMau %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu RH:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhomMauRH"
+                                                        value="<%= data.BN.NhomMauRH %>" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="text-align: right;">
+                                    <button class="btn btn-success text-light" type="submit">Cập nhật</button>
+                                </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+</div>
+
+</div>
+</div>
+
+<!-- this page js -->
+<script src="/static/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="/static/assets/libs/moment/min/moment.min.js"></script>
+<script src="/static/dist/js/pages/calendar/cal-init.js"></script>
+<script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+<script>
+    $('#ngSinh').datepicker({
+        format: "yyyy-mm-dd",
+        language: "vi",
+        calendarWeeks: true,
+        autoclose: true
+    });
+    $('#ngSinh').val('<%= data.User.NgaySinh %>');
+    $('#GioiTinh').val('<%= data.User.GioiTinh %>');
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgProfile').attr('src', e.target.result).width(150).height(150);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    let urlImg = $('#imgProfile').attr('src')
+    $('#img-avatar').on('change', function () {
+        readURL(this);
+        $('#label-avatar').css('display', 'none');
+        $('#clearImg').css('display', 'inline-block');
+        $('#uploadImg').css('display', 'inline-block');
+    })
+    $('#clearImg').click(function () {
+        $('#imgProfile').attr('src', urlImg).width(150).height(150);
+        $('#label-avatar').css('display', 'block');
+        $('#clearImg').css('display', 'none');
+        $('#uploadImg').css('display', 'none');
+        $('#img-avatar').val('')
+    })
+</script>

@@ -7,18 +7,18 @@
         <div class="card-body">
             <div class="row mb-4">
                 <div class="image-container col-lg-2 col-md-3 col-sm-4 mb-2">
-                    <img src="http://placehold.it/150x150" id="imgProfile"
-                        style="width: 150px; height: 150px; margin-right: 20px;" class="img-thumbnail" />
+                    <img src="<%= data.TK.AnhDaiDien %>" id="imgProfile"
+                        style="width: 150px; margin-right: 20px;" class="img-thumbnail" />
                 </div>
                 <div class="userData ml-3 col-lg-3 col-md-6 col-sm-8">
-                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold;">Đặng Minh Hiếu
+                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold;"><%= data.TK.HoTen %>
                         <span class="badge bg-success"
                             style="font-size:10px;position: relative;top:-13px;">Online</span>
                     </h2>
-                    <h6 class="d-block">@hieugiddy</h6>
-                    <a href="/messenger/chat/10" class="btn btn-primary mt-2"><i class="mdi mdi-wechat"></i>&nbsp;Trò
+                    <h6 class="d-block">@<%= data.TK.Username %></h6>
+                    <a href="/messenger/chat/<%= data.BN.IDTK %>" class="btn btn-primary mt-2"><i class="mdi mdi-wechat"></i>&nbsp;Trò
                         chuyện</a>
-                    <a onclick="goidien(this)" data-id="10" class="btn btn-dark mt-2"><i class="mdi mdi-webcam"></i>&nbsp;Video call</a>
+                    <a data-id="10" class="btn btn-dark mt-2"><i class="mdi mdi-webcam"></i>&nbsp;Video call</a>
                 </div>
             </div>
 
@@ -55,52 +55,44 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row"><strong>Mã định danh:</strong></th>
-                                            <td>2929</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><strong>Số sổ sức khỏe:</strong></th>
-                                            <td>112211</td>
+                                            <td><%= data.BN.IDTK %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Số thẻ BHYT:</strong></th>
-                                            <td>488888888888</td>
+                                            <td><%= data.BN.SoTheBHYT %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Họ tên:</strong></th>
-                                            <td>Đặng Minh Hiếu</td>
+                                            <td><%= data.TK.HoTen %></td>
                                         </tr>
 
                                         <tr>
                                             <th scope="row"><strong>Ngày sinh:</strong></th>
-                                            <td>09/06/2000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><strong>Chức vụ:</strong></th>
-                                            <td>Bệnh nhân</td>
+                                            <td><%= data.TK.NgaySinh %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Giới tính:</strong></th>
-                                            <td>Nam</td>
+                                            <td>
+                                                <% if(data.TK.GioiTinh==1){ %> Nam <%}%>
+                                                <% if(data.TK.GioiTinh==0){ %> Nữ <%}%>
+                                                <% if(data.TK.GioiTinh==2){ %> Khác <%}%>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Số điện thoại:</strong></th>
-                                            <td>0368336666</td>
+                                            <td><%= data.TK.SoDT %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>CMND/CCID:</strong></th>
-                                            <td>049200000111</td>
+                                            <td><%= data.TK.CMND %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Email:</strong></th>
-                                            <td>hieudang9000@gmail.com</td>
+                                            <td><%= data.TK.Email %></td>
                                         </tr>
                                         <tr>
                                             <th scope="row"><strong>Địa chỉ:</strong></th>
-                                            <td>Thôn Mỹ Phước, Xã Duy Phước, Huyện Duy Xuyên, Tỉnh Quảng Nam.</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><strong>Giới thiệu bản thân:</strong></th>
-                                            <td>abcdef.</td>
+                                            <td><%= data.TK.DiaChi %></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -113,90 +105,87 @@
                                                 <th scope="row"><strong>Đường huyết:</strong></th>
                                                 <td>
                                                     <input type="text" class="form-control" name="DuongHuyet"
-                                                        value="12.7" />
+                                                        value="<%= data.BN.DuongHuyet %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>SPO2:</strong></th>
                                                 <td>
-                                                    <input type="text" class="form-control" name="SPO2" value="121" />
+                                                    <input type="text" class="form-control" name="SPO2" value="<%= data.BN.SPO2 %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Huyết áp:</strong></th>
                                                 <td>
                                                     <input type="text" class="form-control" name="HuyetAp"
-                                                        value="12.7" />
+                                                        value="<%= data.BN.HuyetAp %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Nhiệt độ:</strong></th>
                                                 <td>
                                                     <input type="text" class="form-control" name="NhietDo"
-                                                        value="12 độ C" />
+                                                        value="<%= data.BN.NhietDo %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Nhịp tim:</strong></th>
                                                 <td>
-                                                    <input type="text" class="form-control" name="NhipTim" value="12" />
+                                                    <input type="text" class="form-control" name="NhipTim" value="<%= data.BN.NhipTim %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Chiều cao:</strong></th>
                                                 <td>
                                                     <input type="text" class="form-control" name="ChieuCao"
-                                                        value="1.2m" />
+                                                        value="<%= data.BN.ChieuCao %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Cân nặng:</strong></th>
                                                 <td>
                                                     <input type="text" class="form-control" name="CanNang"
-                                                        value="120km" />
+                                                        value="<%= data.BN.CanNang %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Chỉ số BMI:</strong></th>
                                                 <td>
-                                                    <input type="text" class="form-control" name="BMI" value="12.7" />
+                                                    <input type="text" class="form-control" name="BMI" value="<%= data.BN.ChiSoBMI %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Nhóm máu:</strong></th>
                                                 <td>
-                                                    <input type="text" class="form-control" name="NhomMau" value="A+" />
+                                                    <input type="text" class="form-control" name="NhomMau" value="<%= data.BN.NhomMau %>" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row"><strong>Nhóm máu RH:</strong></th>
                                                 <td>
-                                                    <input type="text" class="form-control" name="RH" value="A-" />
+                                                    <input type="text" class="form-control" name="RH" value="<%= data.BN.NhomMauRH %>" />
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
 
                                     <div style="text-align: right;">
-                                        <button class="btn btn-success text-light">Lưu</button>
+                                        <button class="btn btn-success text-light">Cập nhập</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="quatrinh" role="tabpanel">
-                        <a href="/benh-nhan/10/them-benh-dieu-tri"
-                            style="display:block;text-align:right;padding:10px 0">(+) Thêm bệnh
-                            điều
-                            trị</a>
+                        <a href="/benh-nhan/<%= data.TK.ID %>/them-benh-dieu-tri"
+                            style="display:block;text-align:right;padding:10px 0">(+) Thêm bệnh điều trị</a>
                         <div class="btn-group col-12 mt-2">
                             <ol>
-                                <li data-bs-toggle="modal" data-bs-target="#kehoachtb" style="cursor: pointer;">
-                                    Viêm gan B
+                                <% data.Benh.forEach(function(item){ %>
+                                <li data-bs-toggle="modal" data-bs-target="#kehoachtb" style="cursor: pointer;" data-id="<%= item.ID %>" class="BenhItem">
+                                    <%= item.TenBenh %>
                                 </li>
-                                <li data-bs-toggle="modal" data-bs-target="#kehoachtb" style="cursor: pointer;">
-                                    Viêm gan B
-                                </li>
+                                <% }); %>
                             </ol>
                         </div>
                     </div>
@@ -285,24 +274,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="kehoachtb">Viêm gan B</h5>
+                        <h5 class="modal-title" id="label-benh"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <a href="/benh-nhan/10/them-ke-hoach" class="btn btn-danger mb-3">Thêm kế hoạch</a>
-                        <ol style="margin-left: -15px !important;">
-                            <li style="border-bottom: 1px solid #f1f1f1;">
-                                <a href="/benh-nhan/10/chi-tiet-ke-hoach">
-                                    <div class="card" style="margin-bottom: 0 !important;">
-                                        <div class="card-body"
-                                            style="position: relative;padding: 20px 20px 5px 5px !important;">
-                                            <strong class="text-dark">Xạ trị lần 1</strong>
-                                            <p class="text-dark"><em>11/11/2020 - 20/11/2021</em></p>
-                                            <span style="position: absolute; right: 5px;top:10px">Đang điều trị</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                        <a href="" class="btn btn-danger mb-3" id="btnThemKH">Thêm kế hoạch</a>
+                        <ol style="margin-left: -15px !important;" id="dsKH">
+                            
                         </ol>
                     </div>
                 </div>
@@ -331,13 +309,40 @@
         calendarWeeks: true,
         autoclose: true
     });
-    function goidien(obj) {
-        var a = window;
-        var b = document;
-        var c = encodeURIComponent;
-        var d = a.open('/messenger/videocall/'+$(obj).attr('data-id'),
-            'bookmarklet_popup',
-            'left=' + ((a.screenX || a.screenLeft) + 100) + ',top=' + ((a.screenY || a.screenTop) + 100) + ',height=510px,width=950px,resizable=1,alwaysRaised=1');
-        a.setTimeout(function () { d.focus() }, 300);
-    }
+    $(".BenhItem").click(function(){
+        $("#label-benh").html($(this).html());
+        $('#btnThemKH').attr('href','/benh-nhan/<%= data.BN.IDTK %>/them-ke-hoach/'+$(this).attr('data-id'));
+        
+        $.ajax({
+                url: '/api/ds-ke-hoach',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    IDBN: <%= data.BN.IDTK %>,
+                    IDBenh: $(this).attr('data-id')
+                }
+            }).done(function (ketqua) {
+                if(ketqua[0].IDBacSiDieuTri!=<%= data.User.ID %>)
+                    $('#btnThemKH').css('display','none');
+                else
+                    $('#btnThemKH').css('display','inline-block');
+                var str='';
+                ketqua.forEach(element => {
+                    let TrangThai=(element.TrangThai)?'Hoàn thành':'Chưa hoàn thành';
+
+                    str+='<li style="border-bottom: 1px solid #f1f1f1;">'+
+                            '<a href="/benh-nhan/'+element.IDBenhNhan+'/chi-tiet-ke-hoach/'+element.ID+'">'+
+                                '<div class="card" style="margin-bottom: 0 !important;">'+
+                                    '<div class="card-body" style="position: relative;padding: 20px 20px 5px 5px !important;">'+
+                                        '<strong class="text-dark">'+element.TenKeHoach+'</strong>'+
+                                        '<p class="text-dark"><em>'+element.ThoiGian+'</em></p>'+
+                                        '<span style="position: absolute; right: 5px;top:10px">'+TrangThai+'</span>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</a>'+
+                        '</li>';
+                });
+                $("#dsKH").html(str);
+            });
+    });
 </script>

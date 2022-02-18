@@ -16,26 +16,30 @@
                             <th>Họ tên</th>
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
-                            <th>Bệnh điều trị</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
+                        <% data.DSDT.forEach(function(item){ %>
+                        <tr> 
+                            <td><%= item.ID %></td>
                             <td>
-                                <img src="a.png" alt="" width="70px" />
+                                <img src="<%= item.AnhDaiDien %>" alt="" width="70px" />
                             </td>
-                            <td>N.V.A</td>
-                            <td>Nam</td>
-                            <td>08/01/1998</td>
-                            <td>Viêm gan B</td>
+                            <td><%= item.HoTen %></td>
                             <td>
-                                <a href="/thong-tin/10">
+                                <% if(item.GioiTinh==1){%> Nam <%}%>
+                                <% if(item.GioiTinh==0){%> Nữ <%}%>
+                                <% if(item.GioiTinh==2){%> Khác <%}%>
+                            </td>
+                            <td><%= item.NgaySinh %></td>
+                            <td>
+                                <a href="/thong-tin/<%= item.ID %>">
                                     <button type="button" class="btn btn-outline-info">Xem chi tiết</button>
                                 </a>
                             </td>
                         </tr>
+                        <% }); %>
                     </tbody>
                 </table>
             </div>

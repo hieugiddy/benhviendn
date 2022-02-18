@@ -2,7 +2,8 @@
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <div class="container-fluid">
-    <div class="card">
+    <form method="post">
+    <div class="card"> 
         <!-- Tab panes -->
         <div class="tab-content tabcontent-border">
             <div class="tab-pane active py-20" id="hoso" role="tabpanel">
@@ -12,15 +13,18 @@
                             <tbody>
                                 <tr>
                                     <th scope="row"><strong>Bệnh nhân điều trị:</strong></th>
-                                    <td>2929 - N.V.A</td>
+                                    <td><%= data.BN.ID %> - <%= data.BN.HoTen %></td>
+                                    <input type="hidden" name="IDBenhNhan" value="<%= data.BN.ID %>">
                                 </tr>
                                 <tr>
                                     <th scope="row"><strong>Bác sĩ điều trị:</strong></th>
-                                    <td><a href="">21 - N.Văn B</a></td>
+                                    <td><a href=""><%= data.User.ID %> - <%= data.User.HoTen %></a></td>
+                                    <input type="hidden" name="IDBacSiDieuTri" value="<%= data.User.ID %>">
                                 </tr>
                                 <tr>
                                     <th scope="row" style="vertical-align: middle;"><strong>Bệnh điều trị:</strong></th>
-                                    <td><a href="">Viêm gan B</a></td>
+                                    <td><a href=""><%= data.Benh.TenBenh %></a></td>
+                                    <input type="hidden" name="IDBenh" value="<%= data.Benh.ID %>">
                                 </tr>
                                 <tr>
                                     <th scope="row" style="vertical-align: middle;"><strong>Thời gian:</strong></th>
@@ -40,7 +44,7 @@
                                 <tr>
                                     <th scope="row" style="vertical-align: middle;"><strong>Tên kế hoạch:</strong></th>
                                     <td>
-                                        <input type="text" class="form-control" id="tenkehoach"
+                                        <input type="text" class="form-control" id="tenkehoach" name="TenKeHoach"
                                             placeholder="Tên kế hoạch">
                                     </td>
                                 </tr>
@@ -49,21 +53,21 @@
                                     <th scope="row" style="vertical-align: middle;"><strong>Phương pháp điều
                                             trị:</strong></th>
                                     <td>
-                                        <input type="text" class="form-control" id="phuongphapdieutri"
+                                        <input type="text" class="form-control" id="phuongphapdieutri" name="PhuongPhapDieuTri"
                                             placeholder="Phương pháp điều trị">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><strong>Nội dung điều trị:</strong></th>
                                     <td>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" name="NoiDungDieuTri"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><strong>Nhập viện:</strong></th>
                                     <td>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="nhapvien">
+                                            <input type="checkbox" class="form-check-input" id="nhapvien" name="NhapVien">
                                             <label class="form-check-label mb-0" for="nhapvien">Cần phải nhập
                                                 viện</label>
                                         </div>
@@ -76,7 +80,8 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-success text-light" href="" style="float: right;margin: 20px;">Lưu</a>
+    <input class="btn btn-success text-light" type="submit" style="float: right;margin: 20px;" value="Lưu"/>
+    </form>
 </div>
 
 <!-- this page js -->
@@ -85,9 +90,9 @@
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <script>
     $('#thoigian1').datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd/mm/yyyy",
     });
     $('#thoigian2').datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd/mm/yyyy",
     });
 </script>

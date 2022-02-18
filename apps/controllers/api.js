@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var helper = require("../helpers/default");
 var LichKhamBenhModel = require("../models/lichkhambenh");
+var BenhNhanModel = require("../models/benhnhan");
 var dateFormat = require('dateformat');
 
 router.route("/upload-file")
@@ -59,5 +60,16 @@ router.route("/them-thuoc-dieu-tri")
             });
         else
             res.json({ error: "Có lỗi xảy ra" });
+    });
+router.route("/tim-benh")
+    .get(async function (req, res) {
+        var thuoc = await LichKhamBenhModel.timBenh(req.query.q);
+        res.json(thuoc);
+    });
+
+router.route("/ds-ke-hoach")
+    .post(async function (req, res) {
+        var KH = await BenhNhanModel.getKHBenh(req.body.IDBN,req.body.IDBenh);
+        res.json(KH);
     });
 module.exports = router;

@@ -2,9 +2,9 @@ var q = require("q");
 var db = require("../common/DB");
 var conn = db.getConnection();
 
-function getKhungGioConCho(ThoiGian, HinhThuc) {
+function getKhungGioConCho(ThoiGian, HinhThuc, IDBacSi) {
     var defer = q.defer();
-    conn.query('SELECT khunggio.ID, GioBatDau, GioKetThuc, count(lichkhambenh.ID) as sl, khunggio.SoLuong as MaxSL FROM lichkhambenh INNER JOIN khunggio on lichkhambenh.IDKhungGio=khunggio.ID WHERE date(ThoiGianDatLich)=? and ThoiGianHuyLich is null AND HinhThuc=? GROUP BY IDKhungGio HAVING sl < khunggio.SoLuong', [ThoiGian, HinhThuc], function (error, results, fields) {
+    conn.query('SELECT ID, GioBatDau, GioKetThuc, SoLuong FROM khunggio WHERE SoLuong>(SELECT count(ID) as sl FROM lichkhambenh WHERE date(ThoiGianKhamBenh)=? and ThoiGianHuyLich is null AND IDKhungGio=khunggio.ID) AND HinhThuc=? AND IDBacSi=?', [ThoiGian, HinhThuc,IDBacSi], function (error, results, fields) {
         if (error)
             defer.reject(error);
         else
@@ -52,7 +52,7 @@ function filterLichKhamBenh(start, end) {
 
 function checkKhungGio(ThoiGianKhamBenh, IDKhungGio) {
     var defer = q.defer();
-    conn.query('SELECT count(lichkhambenh.ID) as sl, khunggio.SoLuong as MaxSL FROM lichkhambenh INNER JOIN khunggio on lichkhambenh.IDKhungGio=khunggio.ID WHERE date(ThoiGianKhamBenh)=? and ThoiGianHuyLich is null and IDKhungGio=?', [ThoiGianKhamBenh, IDKhungGio], function (error, results, fields) {
+    conn.query('SELECT ID, GioBatDau, GioKetThuc, SoLuong FROM khunggio WHERE SoLuong>(SELECT count(ID) as sl FROM lichkhambenh WHERE date(ThoiGianKhamBenh)=? and ThoiGianHuyLich is null AND IDKhungGio=khunggio.ID) AND ID=?', [ThoiGianKhamBenh, IDKhungGio], function (error, results, fields) {
         if (error)
             defer.reject(error);
         else
@@ -229,6 +229,18 @@ function timThuoc(Ten) {
     return defer.promise;
 }
 
+function timBenh(Ten) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM benh WHERE TenBenh like "%'+Ten+'%"', function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
 function themThuocDieuTri(data) {
     var defer = q.defer();
     conn.query('INSERT INTO thuocdieutri SET ?',[data], function (error, results, fields) {
@@ -244,6 +256,66 @@ function themThuocDieuTri(data) {
 function hoanThanhLichKham(ID) {
     var defer = q.defer();
     conn.query('UPDATE lichkhambenh SET ThoiGianHoanThanh=CURRENT_TIMESTAMP(), SanSangKB=0 WHERE ID=?',[ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function themBenh(data) {
+    var defer = q.defer();
+    conn.query('INSERT INTO benh SET ?',[data], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getBenh(ID) {
+    var defer = q.defer();
+    conn.query('SELECT * FROM benh WHERE ID=?',[ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function themKHDT(data) {
+    var defer = q.defer();
+    conn.query('INSERT INTO kehoachdieutri SET ?',[data], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function updateKH(data,ID) {
+    var defer = q.defer();
+    conn.query('UPDATE kehoachdieutri SET ? WHERE ID=?',[data,ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
+function getLichHenDT(ID) {
+    var defer = q.defer();
+    conn.query('SELECT l.ID,TenKeHoach,l.ThoiGianKhamBenh,l.ThoiGianPheDuyet,l.ThoiGianHuyLich,l.ThoiGianHoanThanh FROM kehoachdieutri AS kh INNER JOIN lichkhambenh AS l ON kh.IDLKB=l.ID WHERE kh.ID=?',[ID], function (error, results, fields) {
         if (error)
             defer.reject(error);
         else
@@ -274,5 +346,11 @@ module.exports = {
     timThuoc: timThuoc,
     themThuocDieuTri: themThuocDieuTri,
     getCTThuoc: getCTThuoc,
-    hoanThanhLichKham: hoanThanhLichKham
+    hoanThanhLichKham: hoanThanhLichKham,
+    timBenh: timBenh,
+    themBenh: themBenh,
+    themKHDT: themKHDT,
+    getBenh: getBenh,
+    updateKH: updateKH,
+    getLichHenDT: getLichHenDT
 }

@@ -61,10 +61,23 @@ function chiTietLKB(IDBS,IDLKB) {
     return defer.promise;
 }
 
+function getDSDT(ID) {
+    var defer = q.defer();
+    conn.query('SELECT ID,AnhDaiDien,HoTen,GioiTinh,NgaySinh FROM taikhoan WHERE ID IN (SELECT DISTINCT IDBenhNhan FROM kehoachdieutri WHERE IDBacSiDieuTri=?)', [ID], function (error, results, fields) {
+        if (error)
+            defer.reject(error);
+        else
+            defer.resolve(results);
+    });
+
+    return defer.promise;
+}
+
 module.exports = {
     getBacSi: getBacSi,
     getInfoBacSi:getInfoBacSi,
     getLichKhamBenh:getLichKhamBenh,
     filterLichKhamBenh:filterLichKhamBenh,
-    chiTietLKB: chiTietLKB
+    chiTietLKB: chiTietLKB,
+    getDSDT: getDSDT
 }

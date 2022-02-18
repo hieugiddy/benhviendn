@@ -13,23 +13,28 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Tên kế hoạch</th>
-                            <th scope="col">Bác sĩ điều trị</th>
+                            <th scope="col">Phương pháp</th>
                             <th scope="col">Thời gian</th>
                             <th scope="col">Trạng thái</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <% data.KH.forEach(function(item){ %>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Xạ trị lần 1</td>
-                            <td>Văn Liêm</td>
-                            <td>11/11/2020 - 20/11/2021</td>
-                            <td>Chờ duyệt</td>
+                            <th scope="row"><%= item.ID %></th>
+                            <td><%= item.TenKeHoach %></td>
+                            <td><%= item.PhuongPhapDieuTri %></td>
+                            <td><%= item.ThoiGian %></td>
                             <td>
-                                <a href="/chi-tiet-ke-hoach/1">Xem chi tiết</a>
+                                <%if(item.TrangThai){%> Hoàn thành <%}%>
+                                <%if(!item.TrangThai){%> Chưa hoàn thành <%}%>
+                            </td>
+                            <td>
+                                <a href="/benh-nhan/<%= data.IDBN %>/chi-tiet-ke-hoach/<%= item.ID %>">Xem chi tiết</a>
                             </td>
                         </tr>
+                        <% }); %>
                     </tbody>
                 </table>
             </div>

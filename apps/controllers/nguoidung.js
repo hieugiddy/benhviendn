@@ -28,7 +28,7 @@ router.route("/")
 router.route("/benh-nhan")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-
+        var BN = await BenhNhanModel.getDSBenhNhan();
         res.render("main", {
             data: {
                 page: 'benhnhan',
@@ -37,6 +37,7 @@ router.route("/benh-nhan")
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                BN: BN
             }
         });
     }]);
@@ -44,7 +45,12 @@ router.route("/benh-nhan")
 router.route("/thong-tin/:id")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var getTK = await TaiKhoanModel.getChiTietTaiKhoan(req.params.id);
+        getTK[0].NgaySinh=dateFormat(new Date(getTK[0].NgaySinh), "dd-mm-yyyy");
 
+        var getBN = await TaiKhoanModel.getChiTietBN(req.params.id);
+        var getDSBenh= await BenhNhanModel.getDSBenh(req.params.id);
+        
         res.render("main", {
             data: {
                 page: 'info',
@@ -57,6 +63,12 @@ router.route("/thong-tin/:id")
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                TK: {
+                    ...getTK[0],
+                    ID: req.params.id
+                },
+                BN: getBN[0],
+                Benh: getDSBenh
             }
         });
     }]);
@@ -115,7 +127,7 @@ router.route("/lich-kham")
             next();
         else {
             var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-            var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
+            var tvSSK = await TaiKhoanModel.getSSK(dataUser[0].Username);
 
             res.render("main", {
                 data: {
@@ -130,11 +142,11 @@ router.route("/lich-kham")
                 }
             });
         }
-    },async function (req, res, next) {
+    }, async function (req, res, next) {
         var dslichkham = (req.query.startD && req.query.endD) ? await BenhNhanModel.filterLichKhamBenh(req.session.User.id, req.query.startD, req.query.endD)
-                                                                : await BenhNhanModel.getLichKhamBenh(req.query.user);
+            : await BenhNhanModel.getLichKhamBenh(req.query.user);
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-        
+
         dslichkham.forEach(item => {
             if (!item.ThoiGianPheDuyet && !item.ThoiGianHuyLich)
                 item.TrangThai = "Chờ phê duyệt";
@@ -168,7 +180,7 @@ router.route("/lich-kham")
         });
     }]);
 
-router.route("/lich-kham/chi-tiet-lich-kham/:idlich")
+router.route("/lich-kham/chi-tiet-lich-kham/:idlich") 
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
         req.body.LKB[0].ThoiGianDatLich = (req.body.LKB[0].ThoiGianDatLich) ? dateFormat(new Date(req.body.LKB[0].ThoiGianDatLich), "yyyy-dd-mm hh:mm") : false;
@@ -276,6 +288,12 @@ router.route("/lich-kham/hoan-thanh-kham-benh")
 router.route("/ds-dieu-tri")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var dsDT= await BacSiModel.getDSDT(req.session.User.id);
+
+        dsDT.forEach(element => {
+            element.NgaySinh= dateFormat(new Date(element.NgaySinh), "dd/mm/yyyy");
+        });
+
         res.render("main", {
             data: {
                 page: 'dsdieutri',
@@ -284,6 +302,7 @@ router.route("/ds-dieu-tri")
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                DSDT: dsDT
             }
         });
     }]);
@@ -291,6 +310,8 @@ router.route("/ds-dieu-tri")
 router.route("/benh-nhan/:id/them-benh-dieu-tri")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var BN = await TaiKhoanModel.getChiTietTaiKhoan(req.params.id);
+
         res.render("main", {
             data: {
                 page: 'addbenhdieutri',
@@ -299,29 +320,95 @@ router.route("/benh-nhan/:id/them-benh-dieu-tri")
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                BN: {
+                    ...BN[0],
+                    ID: req.params.id
+                }
             }
         });
-    }]);
+    }])
+    .post(async function (req, res) {
+        if(req.body.ThemBenh=='on'){
+            var benh = {
+                HinhAnh: 'https://demofree.sirv.com/nope-not-here.jpg',
+                TenBenh: req.body.TenBenh
+            };
+            delete req.body.ThemBenh
+            delete req.body.TenBenh
+            
+            var newBenh=await LichKhamBenhModel.themBenh(benh);
 
-router.route("/benh-nhan/:id/them-ke-hoach")
+            req.body.IDBenh = newBenh.insertId;
+        }
+
+        req.body.NhapVien= (req.body.NhapVien=='on')?1:0;
+        req.body.ThoiGian= req.body.datepicker1 + ' - ' + req.body.datepicker2;
+        req.body.TrangThai= 0;
+
+        delete req.body.datepicker1
+        delete req.body.datepicker2
+
+        var themKHDT=await LichKhamBenhModel.themKHDT(req.body);
+
+        if(themKHDT.affectedRows)
+            res.redirect('/thong-tin/'+req.params.id);
+        else
+            res.json("Lỗi");
+    });
+
+router.route("/benh-nhan/:idbn/them-ke-hoach/:idbenh")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var BN = await TaiKhoanModel.getChiTietTaiKhoan(req.params.idbn);
+        var Benh = await LichKhamBenhModel.getBenh(req.params.idbenh);
+
         res.render("main", {
             data: {
                 page: 'themkehoach',
-
                 title: "Thêm kế hoạch điều trị",
                 User: {
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                BN: {
+                    ...BN[0],
+                    ID: req.params.idbn
+                },
+                Benh: Benh[0]
             }
         });
-    }]);
+    }])
+    .post(async function (req, res) {
+        req.body.NhapVien= (req.body.NhapVien=='on')?1:0;
+        req.body.ThoiGian= req.body.datepicker1 + ' - ' + req.body.datepicker2;
+        req.body.TrangThai= 0;
 
-router.route("/benh-nhan/:id/chi-tiet-ke-hoach")
+        delete req.body.datepicker1
+        delete req.body.datepicker2
+
+        var themKHDT=await LichKhamBenhModel.themKHDT(req.body);
+
+        if(themKHDT.affectedRows)
+            res.redirect('/thong-tin/'+req.params.idbn);
+        else
+            res.json("Lỗi");
+    });
+
+router.route("/benh-nhan/:idbn/chi-tiet-ke-hoach/:idkh")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var BN = await TaiKhoanModel.getChiTietTaiKhoan(req.params.idbn);
+        var KH = await BenhNhanModel.getCTKH(req.params.idkh);
+        var Benh = await LichKhamBenhModel.getBenh(KH[0].IDBenh);
+        var Lich = await LichKhamBenhModel.getLichHenDT(req.params.idkh);
+
+        Lich.forEach(element => {
+            element.ThoiGianKhamBenh=dateFormat(new Date(element.ThoiGianKhamBenh), "dd/mm/yyyy");
+            element.TrangThai=(element.ThoiGianPheDuyet)?'Đã phê duyệt'
+                                                        :((element.ThoiGianHuyLich)?'Đã hủy'
+                                                                                   :((element.ThoiGianHoanThanh)?'Đã hoàn thành':'Chưa phê duyệt'));
+        });
+
         res.render("main", {
             data: {
                 page: 'ctkehoach',
@@ -331,9 +418,37 @@ router.route("/benh-nhan/:id/chi-tiet-ke-hoach")
                     ...dataUser[0],
                     ID: req.session.User.id
                 },
+                BN: {
+                    ...BN[0],
+                    ID: req.params.idbn
+                },
+                Benh: Benh[0],
+                KH: KH[0],
+                Lich: Lich
             }
         });
-    }]);
+    }])
+    .post(async function (req, res) {
+        if(req.body.btnCapNhapKH){
+            req.body.NhapVien= (req.body.NhapVien=='on')?1:0;
+            req.body.TrangThai= (req.body.TrangThai=='on')?1:0;
+            req.body.ThoiGian= req.body.datepicker1 + ' - ' + req.body.datepicker2;
+
+            delete req.body.datepicker1
+            delete req.body.datepicker2
+            delete req.body.btnCapNhapKH
+
+            var updateKH=await LichKhamBenhModel.updateKH(req.body,req.params.idkh);
+
+            if(updateKH.changedRows)
+                res.redirect('back');
+            else
+                res.json("Lỗi");
+        }
+        if(req.body.btnCapNhapKH){
+            console.log(req.body)
+        }
+    });
 
 router.route("/messenger")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
@@ -419,7 +534,8 @@ router.route("/phong-kham")
         else {
             if (req.body.GetAjax && req.body.ThoiGianKhamBenh && req.body.HinhThuc != -1) {
                 req.body.ThoiGianKhamBenh = dateFormat(new Date(req.body.ThoiGianKhamBenh), "yyyy-dd-mm");
-                var khunggio = await LichKhamBenhModel.getKhungGioConCho(req.body.ThoiGianKhamBenh, req.body.HinhThuc);
+                
+                var khunggio = await LichKhamBenhModel.getKhungGioConCho(req.body.ThoiGianKhamBenh, req.body.HinhThuc,req.body.IDBacSi);
                 res.json(khunggio);
             }
             else
@@ -427,16 +543,31 @@ router.route("/phong-kham")
         }
     }, async function (req, res) {
         delete req.body.HinhThuc;
-
-        req.body.IDBenhNhan = req.session.User.id;
-        req.body.IDBacSi = req.query.bacsi;
+        
+        req.body.IDBenhNhan =(req.body.IDBenhNhan)?req.body.IDBenhNhan:req.session.User.id;
+        req.body.IDBacSi = (req.body.IDBacSi)?req.body.IDBacSi:req.query.bacsi;
         req.body.ThoiGianKhamBenh = dateFormat(new Date(req.body.ThoiGianKhamBenh), "yyyy-dd-mm");
 
         var result = await LichKhamBenhModel.checkKhungGio(req.body.ThoiGianKhamBenh, req.body.IDKhungGio);
 
-        if (result[0].sl < result[0].MaxSL) {
-            var datLich = await LichKhamBenhModel.addLich(req.body);
-            res.redirect('/lich-kham');
+        if (result[0]) {
+            if(req.body.btnDatHen){
+                var IDKH=req.body.IDKH;
+                delete req.body.btnDatHen;
+                delete req.body.IDKH;
+
+                var datLich = await LichKhamBenhModel.addLich(req.body);
+
+                var data={
+                    IDLKB: datLich.insertId
+                }
+                var updateKH=await LichKhamBenhModel.updateKH(data,IDKH);
+                res.redirect('back');
+            }
+            else{
+                var datLich = await LichKhamBenhModel.addLich(req.body);
+                res.redirect('/lich-kham');
+            }
         }
         else {
             res.send('<script>alert("Khung giờ này đã hết chỗ"); history.back();</script>');
@@ -461,7 +592,7 @@ router.route("/phong-kham/:id/lichkham")
 router.route("/thanh-vien")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-        var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
+        var tvSSK = await TaiKhoanModel.getSSK(dataUser[0].Username);
 
         res.render("main", {
             data: {
@@ -476,11 +607,72 @@ router.route("/thanh-vien")
         });
     }]);
 
+router.route("/so-suc-khoe/:id/them-thanh-vien")
+    .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
+        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+
+        res.render("main", {
+            data: {
+                page: 'themthanhvien',
+                title: "Thêm thành viên gia đình",
+                User: {
+                    ...dataUser[0],
+                    ID: req.session.User.id
+                },
+            }
+        });
+    }])
+    .post(helper.uploadFile().fields([{ name: 'AnhDaiDien', maxCount: 1 }]), async function (req, res) {
+        try {
+            let file = req.files;
+            let user = {
+                HoTen: req.body.HoTen,
+                GioiTinh: req.body.GioiTinh,
+                NgaySinh: req.body.NgaySinh,
+                AnhDaiDien: '/static/files/' + file.AnhDaiDien[0].filename,
+                SoDT: req.body.SoDT,
+                CMND: req.body.CMND,
+                DiaChi: req.body.DiaChi,
+                Email: req.body.Email,
+                LoaiTK: 3
+            };
+
+            var addTK = await TaiKhoanModel.addUser(user);
+            if (addTK.affectedRows) {
+                delete req.body.HoTen;
+                delete req.body.GioiTinh;
+                delete req.body.NgaySinh;
+                delete req.body.SoDT;
+                delete req.body.CMND;
+                delete req.body.DiaChi;
+                delete req.body.Email;
+
+                var data = {
+                    ...req.body,
+                    IDTK: addTK.insertId
+                }
+
+                var addBN = await TaiKhoanModel.addBenhNhan(data);
+                if (addBN.affectedRows) {
+                    var lkSSK = await TaiKhoanModel.lkTaiKhoan(req.params.id, addTK.insertId);
+                    res.redirect('/thanh-vien');
+                }
+                else
+                    res.json({ error: "Thất bại" });
+            }
+        }
+        catch (e) {
+            res.json({ error: e });
+        }
+    });
+
 router.route("/ke-hoach-dieu-tri")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
         var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
         if (req.query.user) {
             if (req.query.benh) {
+                var KH=await BenhNhanModel.getKHBenh(req.query.user,req.query.benh);
+
                 res.render("main", {
                     data: {
                         page: 'lichtrinhdt',
@@ -489,22 +681,27 @@ router.route("/ke-hoach-dieu-tri")
                             ...dataUser[0],
                             ID: req.session.User.id
                         },
+                        KH: KH,
+                        IDBN: req.query.user,
                     }
                 });
             }
             else {
+                var Benh = await BenhNhanModel.getBenhDT(req.query.user);
                 res.render("main", {
                     data: {
                         page: 'benhdieutri',
                         title: "Bệnh đang điều trị",
-                        User: dataUser[0]
+                        User: dataUser[0],
+                        ID: req.query.user,
+                        Benh: Benh
                     }
                 });
             }
         }
         else {
             var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-            var tvSSK= await TaiKhoanModel.getSSK(dataUser[0].Username);
+            var tvSSK = await TaiKhoanModel.getSSK(dataUser[0].Username);
             res.render("main", {
                 data: {
                     page: 'chontv',
@@ -519,38 +716,67 @@ router.route("/ke-hoach-dieu-tri")
             });
         }
     }]);
-router.route("/chi-tiet-ke-hoach/:id")
-    .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
-        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
-        res.render("main", {
-            data: {
-                page: 'ctkehoach',
-                child: {
-                    name: 'Nguyễn Văn A',
-                    path: '/thong-tin/10'
-                },
-                title: "Chi tiết kế hoạch điều trị",
-                User: {
-                    ...dataUser[0],
-                    ID: req.session.User.id
-                },
-            }
-        });
-    }]);
+
 router.route("/ho-so-suc-khoe")
     .get([mw.kiemTraDangNhap, mw.rolePemission, async function (req, res) {
-        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(req.session.User.id);
+        var IDTK = (req.query.user) ? req.query.user : req.session.User.id;
+
+        var dataUser = await TaiKhoanModel.getChiTietTaiKhoan(IDTK);
+        dataUser[0].NgaySinh = dateFormat(new Date(dataUser[0].NgaySinh), "yyyy-mm-dd");
+
+        var getBN = await TaiKhoanModel.getChiTietBN(IDTK);
+
         res.render("main", {
             data: {
-                page: 'info',
+                page: 'hssk',
                 title: "Hồ sơ sức khỏe",
                 User: {
                     ...dataUser[0],
-                    ID: req.session.User.id
+                    ID: IDTK
                 },
+                BN: getBN[0]
             }
         });
-    }]);
+    }])
+    .post(helper.uploadFile().fields([{ name: 'AnhDaiDien', maxCount: 1 }]), async function (req, res) {
+        try {
+            var IDTK = (req.query.user) ? req.query.user : req.session.User.id;
+            let file = req.files;
+            
+            let user = {
+                HoTen: req.body.HoTen,
+                GioiTinh: req.body.GioiTinh,
+                NgaySinh: req.body.NgaySinh,
+                SoDT: req.body.SoDT,
+                CMND: req.body.CMND,
+                DiaChi: req.body.DiaChi,
+                Email: req.body.Email,
+            };
+
+            var updateTK = await TaiKhoanModel.updateTK(user, IDTK);
+
+            delete req.body.HoTen;
+            delete req.body.GioiTinh;
+            delete req.body.NgaySinh;
+            delete req.body.SoDT;
+            delete req.body.CMND;
+            delete req.body.DiaChi;
+            delete req.body.Email;
+
+            var updateBN = await TaiKhoanModel.updateBN(req.body, IDTK);
+            
+            if (req.files!=null) {
+                var updateAnh = await TaiKhoanModel.updateTK({
+                    AnhDaiDien: '/static/files/' + file.AnhDaiDien[0].filename
+                }, IDTK);
+            }
+
+            res.redirect('/thanh-vien');
+        }
+        catch (e) {
+            res.redirect('/thanh-vien');
+        }
+    });
 router.route("/xac-nhan-lich-hen")
     .post(async function (req, res) {
         try {

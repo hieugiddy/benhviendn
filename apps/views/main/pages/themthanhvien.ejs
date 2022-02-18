@@ -1,0 +1,204 @@
+<!-- this CSS -->
+<link href="/static/dist/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="card">
+        <form method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="image-container text-center col-lg-2 col-md-3 col-sm-4 mb-3">
+                    <img src="http://placehold.it/150x150" id="imgProfile"
+                        style="width: 150px; height: 150px; object-fit: cover;" class="img-thumbnail mb-2" />
+                        <label for="img-avatar" id="label-avatar" class="btn btn-warning">Chọn ảnh</label>
+                        <input type="file" name="AnhDaiDien" id="img-avatar" accept="image/*" hidden/>
+                </div>
+                <div class="userData ml-3 col-lg-10 col-md-6 col-sm-8">
+                    <div class="tab-pane active py-20" id="hoso" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 px-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><strong>Số thẻ BHYT <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="SoTheBHYT"
+                                                    value="" placeholder="Số thẻ BHYT"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Họ tên <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="HoTen"
+                                                    value="" placeholder="Họ và tên"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Giới tính <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <select name="GioiTinh" class="form-control">
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option value="2">Khác</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Số điện thoại <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="SoDT"
+                                                    value="" placeholder="Số điện thoại"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>CMND/CCID <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="CMND" value="" placeholder="Số CMND hoặc CCID"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Email:</strong></th>
+                                            <td>
+                                                <input type="email" class="form-control" name="Email"
+                                                    value="" placeholder="Địa chỉ email"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" style="vertical-align: middle;"><strong>Ngày sinh
+                                                    <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="input-sm form-control" name="NgaySinh"
+                                                    id="ngSinh" placeholder="Chọn ngày sinh" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><strong>Địa chỉ <sup>(*)</sup>:</strong></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="DiaChi"
+                                                    value="" placeholder="Địa chỉ đang sống"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 px-2">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><strong>Đường huyết:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="DuongHuyet"
+                                                        value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>SPO2:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="SPO2" value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Huyết áp:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="HuyetAp"
+                                                        value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhiệt độ:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhietDo"
+                                                        value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhịp tim:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhipTim" value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chiều cao:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ChieuCao"
+                                                        value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Cân nặng:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="CanNang"
+                                                        value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Chỉ số BMI:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ChiSoBMI" value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhomMau" value="" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><strong>Nhóm máu RH:</strong></th>
+                                                <td>
+                                                    <input type="text" class="form-control" name="NhomMauRH" value="" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div style="text-align: right;">
+                                <button class="btn btn-success text-light" type="submit">Lưu</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- this page js -->
+<script src="/static/dist/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="/static/dist/js/jquery-ui.min.js"></script>
+<script src="/static/assets/libs/moment/min/moment.min.js"></script>
+<script src="/static/dist/js/pages/calendar/cal-init.js"></script>
+<script src="/static/dist/datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/dist/datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+<script>
+    $('#ngSinh').datepicker({
+        format: "yyyy-mm-dd",
+        language: "vi",
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgProfile').attr('src', e.target.result).width(150).height(150);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $('#img-avatar').on('change', function () {
+        readURL(this);
+    });
+    
+</script>
